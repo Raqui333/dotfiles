@@ -1,6 +1,6 @@
 #!/bin/bash
 # By: https://github.com/UserUnavailable
-
+ 
 ## matar o dzen2
 killall dzen2
 
