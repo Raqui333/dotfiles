@@ -49,8 +49,8 @@ Window() {
 	window_name_length=$(echo $window_name | wc -c)
 
 	if [ "$window_name" ];then
-		if [ "$window_name_length" -gt 31 ];then
-			title=$(echo $window_name | head -c30 | sed 's/ $//;s/$/.../')
+		if [ "$window_name_length" -gt 29 ];then
+			title=$(echo $window_name | head -c28 | sed 's/ $//;s/$/.../')
 		else
 			title=$window_name
 		fi
@@ -64,6 +64,12 @@ Window() {
 Mem() {
 	icon="$ICONS/Mem.xbm"
 	command=$(free -h | awk '/Mem/{print $3, $2}' OFS=' / ')
+	echo "^fg($COR)^i($icon)^fg() $command"
+}
+
+Temp() {
+	icon="$ICONS/Temp.xbm"
+	command=$(sensors | awk '/Core/{print substr($3,2,2)"°C"}')
 	echo "^fg($COR)^i($icon)^fg() $command"
 }
 
@@ -121,13 +127,13 @@ echo "^ca(1,herbstclient quit)^p(5)^i($ICONS/Exit.xbm) Exit^ca()"
 ## dzen bar esquerda
 while true; do
 	echo "^bg(#303030)^fg($COR)^i($ICONS/SD.xbm)^ca()^fg()^bg()$(Works)^fg(#303030)^i($ICONS/SD.xbm)^fg() $(Window)"
-	sleep .5
+	sleep 1
 done | dzen2 -p -fn "FantasqueSansMono-10" -x "60" -y "4" -h "22" -fg "#777777" -bg "#121213" -ta "l" -e "button3=" &
 
 sleep 1
 
 ## dzen bar direita
 while true; do
-	echo "^fg(#303030)^i($ICONS/SE.xbm)^fg()^bg(#303030) $(Mem)    $(Pacotes)    $(Musica)    $(Volume)  ^fg($COR)^i($ICONS/SE.xbm)^fg(#000000)^bg($COR) $(Hora)  ^bg()"
-	sleep .5
-done | dzen2 -p -fn "FantasqueSansMono-10" -x "750" -y "4" -h "22" -fg "#777777" -bg "#121212" -ta "r" -e "button3=" &
+	echo "^fg(#303030)^i($ICONS/SE.xbm)^fg()^bg(#303030) $(Mem)    $(Temp)    $(Pacotes)    $(Musica)    $(Volume)  ^fg($COR)^i($ICONS/SE.xbm)^fg(#000000)^bg($COR) $(Hora)  ^bg()"
+	sleep 1
+done | dzen2 -p -fn "FantasqueSansMono-10" -x "700" -y "4" -h "22" -fg "#777777" -bg "#121212" -ta "r" -e "button3=" &
