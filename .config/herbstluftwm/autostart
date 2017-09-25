@@ -1,33 +1,45 @@
 #!/bin/bash
 # By: https://github.com/UserUnavailable
 
+# Iniciar Bar
 /home/anonimo/scripts/bar/bar.sh &
 
-herbstclient pad 0 27
-herbstclient set tree_style '╾│ ├└╼─┐'
+# Facilitar nossa vida
+hc() {
+	herbstclient "${@}"
+}
 
-herbstclient rename default W1
-herbstclient add W2
-herbstclient add W3
-herbstclient add W4
-herbstclient add W5
-herbstclient add W6
-herbstclient add W7
-herbstclient add W8
-herbstclient add W9
+# Espaço para bar e tree_style
+hc pad 0 27
+hc set tree_style '╾│ ├└╼─┐'
 
-herbstclient set frame_gap 0
-herbstclient set frame_border_width 0
-herbstclient set frame_bg_transparent 1
-herbstclient set frame_pandding 3
+# Setando Workspaces
+hc rename default W1
+hc add W2
+hc add W3
+hc add W4
+hc add W5
+hc add W6
+hc add W7
+hc add W8
+hc add W9
 
-herbstclient set window_gap 10
-herbstclient set window_border_width 3
-herbstclient set window_border_normal_color "#282828"
-herbstclient set window_border_active_color "#3ab8c9"
+# Configuração dos frame
+hc set frame_gap 0
+hc set frame_border_width 0
+hc set frame_bg_transparent 1
+hc set frame_pandding 3
 
-herbstclient mousebind Mod4-B1 move
-herbstclient mousebind Mod4-B3 resize
+# Configuração das janelas
+hc set window_gap 10
+hc set window_border_width 3
+hc set window_border_normal_color "#282828"
+hc set window_border_active_color "#3ab8c9"
 
-herbstclient unrule -F
-herbstclient rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
+# Binds do mouse
+hc mousebind Mod4-B1 move
+hc mousebind Mod4-B3 resize
+
+# Regras do wm
+hc unrule -F
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
