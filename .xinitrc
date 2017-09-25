@@ -16,7 +16,7 @@ xsetroot -cursor_name left_ptr
 numlockx &
 powerline-daemon --replace &
 
-[ -e /usr/bin/mpd ] && mpd &
+[ -e $HOME/.mpd/mpd.pid ] && mpd &
 [ -e $HOME/.Xresources ] && xrdb $HOME/.Xresources &
 [ -e $HOME/.fehbg ] && $HOME/.fehbg &
 
