@@ -1,20 +1,13 @@
 [global]
-    format = "<b>%s %p</b>\n%b"
-    geometry = "250x5+1100+35"
+    format = "<b>%s</b>\n%b"
+    geometry = "250x5+1107+35"
     padding = 10
     frame_width = 2
     frame_color = "#3c94a3"
     font = Monospace 8
     format = "<b>%a<b>\n%b"
     alignment = center
-    icon_position = left
     browser = /usr/bin/firefox
-    #sort = yes
-    #indicate_hidden = true
-    #idle_threshold = 0
-    #show_age_threshold = 60
-    #sticky_history = yes
-    #word_wrap = yes
 
 [urgency_low]
     background = "#101010"
