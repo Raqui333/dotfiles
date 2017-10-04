@@ -9,10 +9,9 @@ mod4 + Escape
 mod4 + {Return,t,f,d,a,c}
 	{urxvt,\
 	telegram,\
-	google-chrome-stable,\
+	firefox-bin,\
 	~/scripts/Shells/rofi.sh,\
-	thunar,\
-	zenity --title="Color Selection" --color-selection}
+	thunar}
 
 Print
 	scrot %d-%m-%Y_%H:%M:%S.png
