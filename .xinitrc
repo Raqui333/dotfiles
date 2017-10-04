@@ -14,12 +14,12 @@ xsetroot -cursor_name left_ptr
 
 # Start Programs
 numlockx &
-powerline-daemon --replace &
-dunst &
+#powerline-daemon --replace &
+#dunst &
 xrdb $HOME/.Xresources &
 $HOME/.fehbg &
 
-[ -e $HOME/.mpd/mpd.pid ] || mpd &
+#[ -e $HOME/.mpd/mpd.pid ] || mpd &
 
 # Start WM/DE
 sxhkd &
