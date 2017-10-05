@@ -5,7 +5,7 @@
 killall dzen2
 
 ## variavel para a cor
-COR="#3ab8c9"
+COR="#56598C"
 
 ## diretorio dos icons
 ICONS="/home/anonimo/scripts/icons"
@@ -15,7 +15,7 @@ IconFont="FontAwesome-9"
 
 ## funções
 Works() {
-	wmctrl -d | awk '{gsub(/^/,"W");print $2 $1}' ORS='' | sed "s/*[[:alnum:]]*/^bg(#303030)^fg($COR)  & ^fg()^bg()/;s/-[[:alnum:]]*/^bg(#303030)^fg(#777777)  & ^fg()^bg()/g;s/*\|-//g;\
+	wmctrl -d | awk '{gsub(/^/,"W");print $2 $1}' ORS='' | sed "s/*[[:alnum:]]*/^bg(#282828)^fg($COR)  & ^fg()^bg()/;s/-[[:alnum:]]*/^bg(#282828)^fg(#777777)  & ^fg()^bg()/g;s/*\|-//g;\
 	s:W0:^i($ICONS/Term.xbm):;\
 	s:W1:^fn($IconFont)^fn():;\
 	s:W2:^i($ICONS/Web.xbm):;\
@@ -75,7 +75,7 @@ Temp() {
 
 Pacotes() {
 	icon="$ICONS/Pacman.xbm"
-	command=$(pacman -Qq | wc -l)
+	command=$(ls -d /var/db/pkg/*/* | wc -l)
 	echo "^ca(1,~/scripts/Shells/sysinfo.sh)^fg($COR)^i($icon)^fg() $command^ca()"
 }
 
@@ -99,7 +99,7 @@ Musica() {
 
 Volume() {
 	icon="$ICONS/Volume.xbm"
-	command=$(amixer get Master | awk '/[0-9]%/{gsub(/[][]/,"");print $4}')
+	command=$(amixer get Master | awk '/[0-9]%/{gsub(/[][]/,"");print $5}' | head -1)
 	echo "^ca(4,amixer set Master 5%+)^ca(5,amixer set Master 5%-)^fg($COR)^i($icon)^fg() $command^ca()^ca()"
 }
 
@@ -118,22 +118,22 @@ sleep 1
 ## menu
 (
 echo "^i($ICONS/Menu.xbm)Menu"
-echo "^ca(1,poweroff)^p(5)^i($ICONS/Poweroff.xbm) Poweroff^ca()"
-echo "^ca(1,reboot)^p(5)^i($ICONS/Reboot.xbm) Reboot^ca()"
+echo "^ca(1,sudo poweroff)^p(5)^i($ICONS/Poweroff.xbm) Poweroff^ca()"
+echo "^ca(1,sudo reboot)^p(5)^i($ICONS/Reboot.xbm) Reboot^ca()"
 echo "^ca(1,~/scripts/Shells/lock.sh)^p(5)^i($ICONS/Lock.xbm) Lock^ca()"
 echo "^ca(1,herbstclient quit)^p(5)^i($ICONS/Exit.xbm) Exit^ca()"
 ) | dzen2 -p -fn "FantasqueSansMono-10" -x "0" -y "4" -h "22" -fg "#000000" -bg "$COR" -tw "60" -w "100" -l "4" -m -e "button3=;button1=uncollapse;leaveslave=collapse" &
 
 ## dzen bar esquerda
 while true; do
-	echo "^bg(#303030)^fg($COR)^i($ICONS/SD.xbm)^ca()^fg()^bg()$(Works)^fg(#303030)^i($ICONS/SD.xbm)^fg() $(Window)"
+	echo "^bg(#282828)^fg($COR)^i($ICONS/SD.xbm)^ca()^fg()^bg()$(Works)^fg(#282828)^i($ICONS/SD.xbm)^fg() $(Window)"
 	sleep 1
-done | dzen2 -p -fn "FantasqueSansMono-10" -x "60" -y "4" -h "22" -fg "#777777" -bg "#121213" -ta "l" -e "button3=" &
+done | dzen2 -p  -fn "FantasqueSansMono-10" -x "60" -y "4" -h "22" -fg "#777777" -bg "#121213" -ta "l" -e "button3=" &
 
 sleep 1
 
 ## dzen bar direita
 while true; do
-	echo "^fg(#303030)^i($ICONS/SE.xbm)^fg()^bg(#303030) $(Mem)    $(Temp)    $(Pacotes)    $(Musica)    $(Volume)  ^fg($COR)^i($ICONS/SE.xbm)^fg(#000000)^bg($COR) $(Hora)  ^bg()"
+	echo "^fg(#282828)^i($ICONS/SE.xbm)^fg()^bg(#282828) $(Mem)    $(Temp)    $(Pacotes)    $(Musica)    $(Volume)   ^fg($COR)^i($ICONS/SE.xbm)^fg(#000000)^bg($COR) $(Hora)  ^bg()"
 	sleep 1
 done | dzen2 -p -fn "FantasqueSansMono-10" -x "700" -y "4" -h "22" -fg "#777777" -bg "#121212" -ta "r" -e "button3=" &

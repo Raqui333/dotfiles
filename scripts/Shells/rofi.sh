@@ -4,7 +4,7 @@
 rofi -show run \
 -font "FantasqueSansMono 10" \
 -lines 5 \
--color-normal "#121212,#777777,#121212,#3ab8c9,#000000" \
+-color-normal "#121212,#777777,#121212,#56598C,#000000" \
 -color-window "#121212,#121212,#121212,#121212,#121212" \
 -hide-scrollbar \
 -location 2 \

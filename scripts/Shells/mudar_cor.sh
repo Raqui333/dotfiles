@@ -4,16 +4,12 @@
 ## pegar a cor setada atualmente
 COR_ATUAL=$(awk -F= '/COR=/,gsub(/"/,""){print substr($2,2)}' ~/scripts/bar/bar.sh)
 
-## pegar a cor setada anteriormente
-COR_ANTERIOR=$(awk -F= '/COR=/,gsub(/"/,""){print substr($2,2)}' ~/scripts/bar/bar.sh.bkp)
-
 while true;do
 	clear
 
 	echo "Mudar a cor do WM"
 	echo "digite a cor desejada"
 	
-	echo -e "\ncor anterior: #$COR_ANTERIOR"
 	echo "cor atual: #$COR_ATUAL"
 	read -p "nova cor: #" NOVA_COR
 	
