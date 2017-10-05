@@ -13,9 +13,9 @@ URxvt.background: #050505
 URxvt.foreground: #cdcdcd
 
 URxvt.tab-bg: 235
-URxvt.tab-fg: 87
+URxvt.tab-fg: 250
 URxvt.tabbar-bg: 235
-URxvt.tabbar-fg: 7
+URxvt.tabbar-fg: 240
 
 URxvt.colorUL: #3f6c55
 
