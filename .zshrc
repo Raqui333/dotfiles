@@ -6,12 +6,11 @@ alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias vim="nvim"
 alias merge="xrdb $HOME/.Xresources && echo \" Xresources reloaded\""
-alias userbot="$HOME/scripts/Shells/UserBot.sh $1"
-alias musica="mpv \"$1\" --no-vid"
 alias color="$HOME/scripts/Shells/mudar_cor.sh"
+alias update="sudo emerge --ask --verbose --newuse --deep --with-bdeps=y --update @world"
 
 #source /usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh
-PS1="%B%F{10}%n@%m%F{12} %~ %b%#%f "
+PS1="%B%F{88}%n@%m%F{243} %~ %b%#%f "
 
 autoload -U compinit
 compinit
