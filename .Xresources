@@ -12,9 +12,9 @@ URxvt.matcher.button: 1
 URxvt.background: #050505
 URxvt.foreground: #cdcdcd
 
-URxvt.tab-bg: 235
-URxvt.tab-fg: 250
-URxvt.tabbar-bg: 235
+URxvt.tab-bg: 233
+URxvt.tab-fg: 124
+URxvt.tabbar-bg: 233
 URxvt.tabbar-fg: 240
 
 URxvt.colorUL: #3f6c55
