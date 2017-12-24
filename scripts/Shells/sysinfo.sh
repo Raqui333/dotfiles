@@ -2,7 +2,7 @@
 # By: https://github.com/UserUnavailable
 
 # cor
-FG="#56598C"
+FG="#742310"
 
 # font bold e normal
 bold="FantasqueSansMono:bold:size=9"
@@ -46,4 +46,4 @@ echo "^p(20)^fg($FG)Wm^fg()^fn($normal) .........: $wm"
 echo "^p(20)^fg($FG)Icon^fg()^fn($normal) .......: $icon"
 echo "^p(20)^fg($FG)Font^fg()^fn($normal) .......: $font"
 echo "^p(20)^fg($FG)Theme^fg()^fn($normal) ......: $theme"
-) | dzen2 -p -fn "$bold" -bg "#121212" -fg "#777777" -x "10" -y "35" -h "14" -w "285" -l "19" -e "onstart=uncollapse;button3=exit"
+) | dzen2 -p -fn "$bold" -bg "#050505" -fg "#777777" -x "10" -y "35" -h "14" -w "285" -l "19" -e "onstart=uncollapse;button3=exit"

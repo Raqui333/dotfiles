@@ -4,8 +4,8 @@
 rofi -show run \
 -font "FantasqueSansMono 10" \
 -lines 5 \
--color-normal "#121212,#777777,#121212,#56598C,#000000" \
--color-window "#121212,#121212,#121212,#121212,#121212" \
+-color-normal "#050505,#777777,#050505,#742310,#000000" \
+-color-window "#050505,#050505,#050505,#050505,#050505" \
 -hide-scrollbar \
 -location 2 \
 -yoffset 38 \
