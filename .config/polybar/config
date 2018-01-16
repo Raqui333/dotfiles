@@ -1,0 +1,101 @@
+[colors]
+text = #777777
+icon = #602733
+
+[bar/BAR]
+monitor = VGA1
+
+width = 100%
+height = 20
+
+fixed-center = true
+
+radius = 0
+border-size = 0
+
+font-0 = siji
+font-1 = FantasqueSansMono:size=10
+
+modules-left = title
+modules-right = memory temperature mpd volume date
+module-margin = 1
+
+background = #050505
+
+[module/title]
+type = internal/xwindow
+
+format =  <label>
+format-foreground = ${colors.icon}
+
+label = %title%
+label-foreground = ${colors.text}
+
+[module/memory]
+type = internal/memory
+
+interval = 1
+
+format =  <label>
+format-foreground = ${colors.icon}
+
+label = %gb_used% / %gb_free%
+label-foreground = ${colors.text}
+
+[module/temperature]
+type = internal/temperature
+interval = 1
+
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input
+
+format =  <label>
+format-foreground = ${colors.icon}
+
+label = %temperature-c%
+label-foreground = ${colors.text}
+
+[module/mpd]
+type = internal/mpd
+
+interval = 5
+
+format-online =  <label-song>
+format-online-foreground = ${colors.icon}
+
+format-offline =  <label-offline>
+format-offline-foreground = ${colors.icon}
+
+label-song = %title%
+label-song-foreground = ${colors.text}
+
+label-offline = Paused
+label-offline-foreground = ${colors.text}
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Master
+
+format-volume =  <bar-volume>
+format-volume-foreground = ${colors.icon}
+
+bar-volume-width = 10
+bar-volume-empty-foreground = #404040
+bar-volume-empty = ─
+bar-volume-fill = ─
+bar-volume-indicator = |
+
+[module/date]
+type = internal/date
+
+time = "%I:%M %p "
+
+format =  <label>
+format-foreground = ${colors.icon}
+
+label = %time%
+label-foreground = ${colors.text}
