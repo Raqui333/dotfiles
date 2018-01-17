@@ -5,15 +5,17 @@ URxvt.cursorBlink: true
 URxvt.perl-ext-common: default,selection-to-clipboard,tabbed,matcher
 URxvt.saveLines: 10000
 URxvt.geometry: 100x30
-URxvt.url-launcher: /usr/bin/google-chrome-stable
+URxvt.url-launcher: /usr/local/bin/firefox
 URxvt.matcher.button: 1
 
 !! Colors
 URxvt.background: #050505
 URxvt.foreground: #cdcdcd
 
+URxvt.internalBorder: 5
+
 URxvt.tab-bg: 233
-URxvt.tab-fg: 124
+URxvt.tab-fg: 9
 URxvt.tabbar-bg: 233
 URxvt.tabbar-fg: 240
 
@@ -36,3 +38,4 @@ URxvt.color12: #3d82af
 URxvt.color13: #a43fa8
 URxvt.color14: #3c94a3
 URxvt.color15: #cdcdcd
+
