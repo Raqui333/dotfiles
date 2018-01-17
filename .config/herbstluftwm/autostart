@@ -2,7 +2,7 @@
 # By: https://github.com/UserUnavailable
 
 # Iniciar Bar
-/home/anonimo/scripts/bar/bar.sh &
+/home/anonimo/scripts/bar/bar2.sh &
 
 # Facilitar nossa vida
 hc() {
@@ -10,7 +10,7 @@ hc() {
 }
 
 # Espaço para bar e tree_style
-hc pad 0 27
+hc pad 0 20
 hc set tree_style '╾│ ├└╼─┐'
 
 # Setando Workspaces
@@ -28,13 +28,13 @@ hc add W9
 hc set frame_gap 0
 hc set frame_border_width 0
 hc set frame_bg_transparent 1
-hc set frame_pandding 3
+hc set frame_padding 3
 
 # Configuração das janelas
 hc set window_gap 10
-hc set window_border_width 3
+hc set window_border_width 4
 hc set window_border_normal_color "#282828"
-hc set window_border_active_color "#3ab8c9"
+hc set window_border_active_color "#602733"
 
 # Binds do mouse
 hc mousebind Mod4-B1 move
@@ -43,3 +43,6 @@ hc mousebind Mod4-B3 resize
 # Regras do wm
 hc unrule -F
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
+
+# Para algumas BARs
+hc rule windowtype="_NET_WM_WINDOW_TYPE_DOCK" manage=off

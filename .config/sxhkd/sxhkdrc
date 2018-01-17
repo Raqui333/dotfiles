@@ -9,7 +9,7 @@ mod4 + Escape
 mod4 + {Return,t,f,d,a,c}
 	{urxvt,\
 	telegram,\
-	firefox-bin,\
+	firefox,\
 	~/scripts/Shells/rofi.sh,\
 	thunar}
 
