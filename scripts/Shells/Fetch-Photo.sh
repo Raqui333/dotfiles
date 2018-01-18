@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TAB="\t\t\t\t\t\t"
-PHOTO="${}"
+PHOTO="/home/anonimo/Pictures/Asura.jpg"
 
 clear
 
@@ -19,5 +19,5 @@ echo -e "${TAB} \033[01;34mMem\033[0m: $(free -m | awk '/Mem/{print $3"MiB", $2"
 echo
 
 # Config Width, Height, X, Y
-PoS="50x85+7+5"
+POS="15x20+2+3"
 printf "\e]20;${PHOTO};${POS}\a"
