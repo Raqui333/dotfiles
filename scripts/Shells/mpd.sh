@@ -23,7 +23,7 @@ icon="$HOME/scripts/icons"
 player="^ca(1,mpc prev)^i($icon/Prev.xbm)^ca()   ^ca(1,mpc play)^i($icon/Play.xbm)^ca()   ^ca(1,mpc stop)^i($icon/Stop.xbm)^ca()  ^ca(1,mpc next)^i($icon/Next.xbm)^ca()"
 
 while true; do
-echo "^p(80)^fg(#742310)^fn($BOLD)Mpd^fn()^fg()
+echo "^p(80)^fg(#6d2967)^fn($BOLD)Mpd^fn()^fg()
 
 ^p(20)$([ -z "$(mpc current -f %artist%)" ] \
 	&& echo "Paused" \
@@ -33,6 +33,6 @@ echo "^p(80)^fg(#742310)^fn($BOLD)Mpd^fn()^fg()
 	|| echo $(Music))
 
 ^p(41) $player
-$(mpc | awk 'NR==2{gsub(/[()]/,"");print $NF}' | gdbar -w 190 -h 3 -fg '#742310' -bg '#303030')"
+$(mpc | awk 'NR==2{gsub(/[()]/,"");print $NF}' | gdbar -w 190 -h 3 -fg '#6d2967' -bg '#303030')"
 sleep 1
 done | dzen2 -p -y '35' -x '1000' -l '6' -w '185' -ta 'l' -fg '#777777' -bg '#050505' -fn "FantasqueSansMono:size=8" -e 'onstart=uncollapse;button3=exit'

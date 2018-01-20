@@ -2,7 +2,7 @@
 # By: https://github.com/UserUnavailable
 
 # cor
-FG="#742310"
+FG="#6d2967"
 
 # font bold e normal
 bold="FantasqueSansMono:bold:size=9"

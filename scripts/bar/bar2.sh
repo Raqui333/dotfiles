@@ -2,7 +2,7 @@
 
 killall dzen2
 ICONS="$HOME/scripts/icons"
-COR="#742310"
+COR="#6d2967"
 
 Window() {
 	command=$(herbstclient layout | awk '/FOCUS/{gsub(/[^[:alpha:][:blank:]]/,"");print $1}')
@@ -82,22 +82,18 @@ Volume() {
 
 Hora() {
 	icon="$ICONS/Relogio.xbm"
-	if [ "$(date +%H)" -ge 12 ];then
-		command=$(echo "$(date +'%I:%M') PM")
-	else
-		command=$(echo "$(date +'%I:%M') AM")
-	fi
+	command=$(date +'%I:%M %p')
 	echo "^ca(1,~/scripts/Shells/calendario.sh)^fg($COR)^i($icon)^fg() $command^ca()"
 }
 
 while true;do
 	echo "$(Window)"
 	sleep 2
-done | dzen2 -p -ta "l" -bg "#050505" -fg "#777777" -fn "fantasquesansmono-10" -h "20" -e "button3=" &
+done | dzen2 -p -ta "l" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "25" -e "button3=" &
 
 sleep 1
 
 while true;do
-	echo "  $(Mem)   $(Temp)   $(Pacotes)   $(Musica)   $(Volume)   $(Hora) "
+	echo "  $(Mem)     $(Temp)     $(Pacotes)     $(Musica)     $(Volume)     $(Hora) "
 	sleep 2
-done | dzen2 -p -ta "r" -bg "#050505" -fg "#777777" -fn "fantasquesansmono-10" -h "20" -e "button3=" -x "500" &
+done | dzen2 -p -ta "r" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "25" -e "button3=" -x "500" &
