@@ -26,7 +26,13 @@ bindkey '^[[3~' delete-char
 bindkey '^[[8~' end-of-line
 bindkey '^[[7~' beginning-of-line
 
+# Options
+#
 setopt menu_complete
+setopt auto_cd
+setopt share_history
+setopt extended_history
+setopt hist_ignore_all_dups
 
 # Funtions
 #
