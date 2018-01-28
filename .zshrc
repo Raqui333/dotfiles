@@ -11,20 +11,24 @@ SAVEHIST=10000
 #
 export LFS=/mnt/lfs
 
-# Prompt
+# Modules
 #
-PS1="%B┌[%F{10}%n%f@%F{10}%m%f]%F{11}-%f[%F{10}%*%f][%(0?.%F{10}OK.%F{9}ERROR %?)%f]%F{11}-%f[%F{10} %~ %f]
-└╼%b "
-
 autoload -U compinit
 compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
+autoload -U vcs_info
+zstyle ':vcs_info:*' formats %b
+
+# keys
+#
 bindkey '^[[3~' delete-char
 bindkey '^[[8~' end-of-line
 bindkey '^[[7~' beginning-of-line
+bindkey '^[[5~' history-search-backward
+bindkey '^[[6~' history-search-forward
 
 # Options
 #
@@ -33,9 +37,18 @@ setopt auto_cd
 setopt share_history
 setopt extended_history
 setopt hist_ignore_all_dups
+setopt prompt_subst
 
 # Funtions
 #
+function git_branch() {
+	vcs_info
+	if [[ ! ${vcs_info_msg_0_} = $NULL ]]
+	then
+		echo "%F{5}-%f(%F{5}${vcs_info_msg_0_}%f)"
+	fi
+}
+
 function merge(){
 	if [[ -e $HOME/.Xresources ]]
 	then
@@ -93,9 +106,17 @@ ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]="fg=5"
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]="fg=5"
 ZSH_HIGHLIGHT_STYLES[assign]="fg=14,bold"
 ZSH_HIGHLIGHT_STYLES[redirection]="fg=166"
+ZSH_HIGHLIGHT_STYLES[function]="fg=11"
+ZSH_HIGHLIGHT_STYLES[builtin]="fg=10"
 
 # Anti-Drop
 #
+ZSH_HIGHLIGHT_PATTERNS+=("sudo" "fg=10,underline")
 ZSH_HIGHLIGHT_PATTERNS+=("rm" "fg=9,underline")
 ZSH_HIGHLIGHT_REGEXP+=("(.*?)\(\)\{\1(\|\1)?\}\|\1" "bg=9,bold,fg=0")
 ZSH_HIGHLIGHT_REGEXP+=("(sudo[:space:])?rm -rf(v)? /(\*)?" "bg=9,bold,fg=0")
+
+# Prompts
+#
+PROMPT='%B┌[%F{5}%n%f@%F{5}%m%f]%F{5}-%f[%F{5}%*%f]%F{5}-%f[%F{5} %~ %f]$(git_branch)%(0?.. %F{9}%?%f)
+└╼%b '
