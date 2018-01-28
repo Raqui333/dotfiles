@@ -9,26 +9,31 @@ SAVEHIST=10000
 
 # Variables
 #
-export LFS=/mnt/lfs
+EDITOR=/usr/bin/vim
+mainColor="5"
 
 # Modules
 #
-autoload -U compinit
+autoload -U compinit vcs_info
 compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-autoload -U vcs_info
 zstyle ':vcs_info:*' formats %b
 
 # keys
 #
-bindkey '^[[3~' delete-char
-bindkey '^[[8~' end-of-line
-bindkey '^[[7~' beginning-of-line
-bindkey '^[[5~' history-search-backward
-bindkey '^[[6~' history-search-forward
+bindkey '^[[3~'   delete-char
+bindkey '^A'      beginning-of-line
+
+bindkey '^[[8~'   end-of-line
+bindkey '^[[7~'   beginning-of-line
+
+bindkey '^[[5~'   history-search-backward
+bindkey '^[[6~'   history-search-forward
+
+bindkey '^[[A'    history-search-backward
+bindkey '^[[B'    history-search-forward
 
 # Options
 #
@@ -45,7 +50,7 @@ function git_branch() {
 	vcs_info
 	if [[ ! ${vcs_info_msg_0_} = $NULL ]]
 	then
-		echo "%F{5}-%f(%F{5}${vcs_info_msg_0_}%f)"
+		echo "%F{$mainColor}-%f(%F{$mainColor}${vcs_info_msg_0_}%f)"
 	fi
 }
 
@@ -59,7 +64,7 @@ function merge(){
 
 function update(){
 	case $1 in
-		-n|--no-ask)
+		-na|--no-ask)
 			sudo emerge --newuse --deep --with-bdeps=y --update @world
 			;;
 		-s|--sync)
@@ -68,12 +73,16 @@ function update(){
 		-h|--help)
 			echo "[USAGE] update <option>"
 			echo
-			echo " -n or --no-ask    run emerge update with no --ask argument"
-			echo " -s or --sync      run emerge --sync"
-			echo " -h or --help      print this mansage"
+			echo " -n or --no-ask    run 'emerge --update' with no --ask argument"
+			echo " -s or --sync      run 'emerge --sync'"
+			echo " -h or --help      print this mensage"
+			;;
+		$NULL)
+			sudo emerge --ask --verbose --newuse --deep --with-bdeps=y --update @world
 			;;
 		*)
-			sudo emerge --ask --verbose --newuse --deep --with-bdeps=y --update @world
+			echo "error: '$1' invalid option"
+			echo "Try 'update --help' for more information"
 			;;
 	esac
 }
@@ -84,6 +93,8 @@ alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias merge=merge
 alias update=update
+alias md="mkdir -p"
+alias color="$HOME/scripts/Shells/cores_zsh.sh"
 
 # Zsh HighLighting Settings
 #
@@ -118,5 +129,5 @@ ZSH_HIGHLIGHT_REGEXP+=("(sudo[:space:])?rm -rf(v)? /(\*)?" "bg=9,bold,fg=0")
 
 # Prompts
 #
-PROMPT='%B┌[%F{5}%n%f@%F{5}%m%f]%F{5}-%f[%F{5}%*%f]%F{5}-%f[%F{5} %~ %f]$(git_branch)%(0?.. %F{9}%?%f)
+PS1='%B┌[%F{$mainColor}%n%f@%F{$mainColor}%m%f]%F{$mainColor}-%f[%F{$mainColor}%*%f]%F{$mainColor}-%f[%F{$mainColor} %~ %f]$(git_branch)%(0?.. %F{9}%?%f)
 └╼%b '
