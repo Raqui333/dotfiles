@@ -7,35 +7,46 @@ URxvt.saveLines: 10000
 URxvt.geometry: 100x30
 URxvt.url-launcher: /usr/local/bin/firefox
 URxvt.matcher.button: 1
+URxvt.termName: rxvt-256color
 
 !! Colors
-URxvt.background: #050505
+URxvt.background: #080808
 URxvt.foreground: #cdcdcd
 
-URxvt.internalBorder: 5
+URxvt.internalBorder: 10
 
 URxvt.tab-bg: 233
-URxvt.tab-fg: 9
+URxvt.tab-fg: 5
 URxvt.tabbar-bg: 233
 URxvt.tabbar-fg: 240
 
 URxvt.colorUL: #3f6c55
 
-URxvt.color0: #050505
-URxvt.color1: #962433
-URxvt.color2: #256341
-URxvt.color3: #8c8508
-URxvt.color4: #295877
-URxvt.color5: #6f2a72
-URxvt.color6: #286570
-URxvt.color7: #afafaf
+*.color0: #050505
+*.color1: #962433
+*.color2: #256341
+*.color3: #8c8508
+*.color4: #295877
+*.color5: #6f2a72
+*.color6: #286570
+*.color7: #afafaf
 
-URxvt.color8: #202020
-URxvt.color9: #db344a
-URxvt.color10: #399562
-URxvt.color11: #b7ae0b
-URxvt.color12: #3d82af
-URxvt.color13: #a43fa8
-URxvt.color14: #3c94a3
-URxvt.color15: #cdcdcd
+*.color8: #202020
+*.color9: #db344a
+*.color10: #399562
+*.color11: #b7ae0b
+*.color12: #3d82af
+*.color13: #a43fa8
+*.color14: #3c94a3
+*.color15: #cdcdcd
 
+rofi.modi: run
+rofi.width: 20
+rofi.lines: 5
+rofi.font: FantasqueSansMono 10
+rofi.color-normal: #050505,#777777,#050505,#6d2967,#000000
+rofi.color-window: #050505,#050505,#050505,#050505,#050505
+rofi.location: 2
+rofi.yoffset: 38
+rofi.separator-style: none
+rofi.hide-scrollbar: true
