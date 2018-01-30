@@ -10,7 +10,7 @@ mod4 + {Return,t,f,d,a,c}
 	{urxvt,\
 	telegram,\
 	firefox,\
-	~/scripts/Shells/rofi.sh,\
+	rofi -show,\
 	thunar}
 
 Print
