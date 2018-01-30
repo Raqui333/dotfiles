@@ -1,0 +1,65 @@
+# sxhkd conf
+# By: https://github.com/UserUnavailable
+
+# restart no sxhkd
+mod4 + Escape
+	pkill -USR1 -x sxhkd
+
+# resto
+mod4 + {Return,t,f,d,a,c}
+	{urxvt,\
+	telegram,\
+	firefox,\
+	rofi -show,\
+	thunar}
+
+Print
+	scrot %d-%m-%Y_%H:%M:%S.png
+
+mod4 + {F5,F6,F7,period,comma,greater,less}
+	{~/scripts/Shells/sysinfo.sh,\
+	~/scripts/Shells/calendario.sh,\
+	~/scripts/Shells/mpd.sh,\
+	amixer set Master 5%+,\
+	amixer set Master 5%-,\
+	mpc volume +10,\
+	mpc volume -10,\}
+
+mod4 + {F9,F10,F11,F12}
+	mpc {prev,play,stop,next}
+
+mod4 + shift + r
+	herbstclient reload
+
+mod4 + {_,shift} + {1-9}
+	herbstclient {use_index,move_index} {0-8}
+
+mod4 + ctrl + {Left,Right}
+	herbstclient {use_index -1,use_index +1}
+
+mod4 + shift + q
+	herbstclient close
+
+mod4 + {Up,Down,Left,Right}
+	herbstclient focus {u,d,l,r}
+
+mod4 + Tab
+	herbstclient cycle
+
+mod4 + {F1,F2,F3}
+	herbstclient {floating,pseudotile,fullscreen}
+
+mod4 + shift + {F1,F2,F3,F4}
+	herbstclient set_layout {vertical,horizontal,grid,max}
+
+mod4 + {h,v}
+	herbstclient split {hotizontal,vertical}
+
+mod4 + alt + {Up,Down,Left,Right}
+	herbstclient resize {up,down,leaft,right} +0.1
+
+mod4 + r
+	herbstclient remove
+
+mod4 + shift + {Up,Down,Left,Right}
+	herbstclient shift {u,d,l,r}
