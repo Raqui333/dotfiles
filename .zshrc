@@ -25,15 +25,10 @@ zstyle ':vcs_info:*' formats %b
 #
 bindkey '^[[3~'   delete-char
 bindkey '^A'      beginning-of-line
-
 bindkey '^[[8~'   end-of-line
 bindkey '^[[7~'   beginning-of-line
-
 bindkey '^[[5~'   history-search-backward
 bindkey '^[[6~'   history-search-forward
-
-bindkey '^[[A'    history-search-backward
-bindkey '^[[B'    history-search-forward
 
 # Options
 #
@@ -44,7 +39,7 @@ setopt extended_history
 setopt hist_ignore_all_dups
 setopt prompt_subst
 
-# Funtions
+# Functions
 #
 function git_branch() {
 	vcs_info
@@ -54,7 +49,16 @@ function git_branch() {
 	fi
 }
 
-function merge(){
+function prompt() {
+	if [[ $(id) =~ root ]]
+	then
+		echo "%f(%F{$mainColor}%n%f)%F{$mainColor}-%f[%F{$mainColor}%m%f]%F{$mainColor}-%f"
+	else
+		echo "%f[%F{$mainColor}%n%f@%F{$mainColor}%m%f]%F{$mainColor}-%f"
+	fi
+}
+
+function merge() {
 	if [[ -e $HOME/.Xresources ]]
 	then
 		xrdb $HOME/.Xresources
@@ -62,39 +66,20 @@ function merge(){
 	fi
 }
 
-function update(){
-	case $1 in
-		-na|--no-ask)
-			sudo emerge --newuse --deep --with-bdeps=y --update @world
-			;;
-		-s|--sync)
-			sudo emerge --sync
-			;;
-		-h|--help)
-			echo "[USAGE] update <option>"
-			echo
-			echo " -n or --no-ask    run 'emerge --update' with no --ask argument"
-			echo " -s or --sync      run 'emerge --sync'"
-			echo " -h or --help      print this mensage"
-			;;
-		$NULL)
-			sudo emerge --ask --verbose --newuse --deep --with-bdeps=y --update @world
-			;;
-		*)
-			echo "error: '$1' invalid option"
-			echo "Try 'update --help' for more information"
-			;;
-	esac
-}
-
 # Aliases
 #
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias merge=merge
-alias update=update
+alias update="sudo emerge --ask --verbose --newuse --deep --with-bdeps=y --update @world"
 alias md="mkdir -p"
 alias color="$HOME/scripts/Shells/cores_zsh.sh"
+
+# Zsh AutoSuggestions Setting
+#
+source /home/anonimo/Applications/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=235,bold"
 
 # Zsh HighLighting Settings
 #
@@ -127,7 +112,7 @@ ZSH_HIGHLIGHT_PATTERNS+=("rm" "fg=9,underline")
 ZSH_HIGHLIGHT_REGEXP+=("(.*?)\(\)\{\1(\|\1)?\}\|\1" "bg=9,bold,fg=0")
 ZSH_HIGHLIGHT_REGEXP+=("(sudo[:space:])?rm -rf(v)? /(\*)?" "bg=9,bold,fg=0")
 
-# Prompts
+# Prompt
 #
-PS1='%B┌[%F{$mainColor}%n%f@%F{$mainColor}%m%f]%F{$mainColor}-%f[%F{$mainColor}%*%f]%F{$mainColor}-%f[%F{$mainColor} %~ %f]$(git_branch)%(0?.. %F{9}%?%f)
+PS1='%B┌$(prompt)[%F{$mainColor}%*%f]%F{$mainColor}-%f[%F{$mainColor} %~ %f]$(git_branch)%(0?.. %F{9}%?%f)
 └╼%b '
