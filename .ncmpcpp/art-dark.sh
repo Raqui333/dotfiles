@@ -31,7 +31,7 @@ function reset_background
            #---------------------
            
            #no need to scale down, i have extent it
-           printf "\e]20;${COVER};30x70+5+30\a"
+           printf "\e]20;${COVER};30x70+4+35\a"
         else
             reset_background
         fi
