@@ -12,5 +12,5 @@ COVER="/tmp/cover.jpg"
      albumPhoto=$(find "${albumDirectory}" -regex ".*/\(${album}\)\.\(png\|jpe?g\)")
      convert "${albumPhoto}" ${COVER}
      
-     printf "\e]20;${COVER};30x70+4+35\a"
+     printf "\e]20;${COVER};30x65+0+10\a"
 ) &
