@@ -26,8 +26,8 @@ Window() {
 	window_name_length=$(echo $window_name | wc -c)
 
 	if [ "$window_name" ];then
-		if [ "$window_name_length" -gt 49 ];then
-			title=$(echo $window_name | head -c49 | sed 's/ $//;s/$/.../')
+		if [ "$window_name_length" -gt 21 ];then
+			title=$(echo $window_name | head -c20 | sed 's/ $//;s/$/.../')
 		else
 			title=$window_name
 		fi
@@ -86,14 +86,44 @@ Hora() {
 	echo "^ca(1,~/scripts/Shells/calendario.sh)^fg($COR)^i($icon)^fg() $command^ca()"
 }
 
-while true;do
-	echo "$(Window)"
-	sleep 2
-done | dzen2 -p -ta "l" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "25" -e "button3=" &
+Works() {
+        wmctrl -d | awk '{print $2 $NF}' ORS=" " | sed \
+        -e "s/\*W[0-4]/^bg($COR)^fg(#000000)  &  ^bg()^fg()/" \
+        -e "s/\-W[0-4]/^bg(#777777)^fg(#000000)  &  ^bg()^fg()/g" \
+        -e "s/\*W[5-9]/^bg($COR) ^bg()/" \
+        -e "s/\-W[5-9]//g" \
+        -e "s/\*\|\-//g" \
+        -e "s/W1/TERM/" \
+        -e "s/W2/MSG/" \
+        -e "s/W3/WEB/" \
+        -e "s/W4/OTHER/"
+}
+
+User() {
+        icon="$ICONS/Gentoo.xbm"
+        command=$(wmctrl -m | awk -F': ' '/Name/{print $NF}')
+        echo "^fg($COR)^i($icon)^fg() $command"
+}
+
+dzen2 -p -bg "#080808" -h "30" -e "button3=" &
 
 sleep 1
 
 while true;do
-	echo "  $(Mem)     $(Temp)     $(Pacotes)     $(Musica)     $(Volume)     $(Hora) "
+        echo "$(Works)"
+        sleep 2
+done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "7" &
+
+sleep 1
+
+while true;do
+    echo " $(Mem)     $(Temp)     $(Pacotes)     $(Window)"
 	sleep 2
-done | dzen2 -p -ta "r" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "25" -e "button3=" -x "500" &
+done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "430" &
+
+sleep 1
+
+while true;do
+    echo "$(User)     $(Musica)     $(Volume)     $(Hora) "
+	sleep 2
+done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "868" &
