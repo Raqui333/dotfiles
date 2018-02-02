@@ -112,12 +112,12 @@ sleep 1
 while true;do
         echo "$(Works)"
         sleep 2
-done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "7" &
+done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "8" &
 
 sleep 1
 
 while true;do
-    echo " $(Mem)     $(Temp)     $(Pacotes)     $(Window)"
+        echo " $(Window)     $(Pacotes)     $(Temp)     $(Mem)"
 	sleep 2
 done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "430" &
 
