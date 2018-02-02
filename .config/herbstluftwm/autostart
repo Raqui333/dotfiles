@@ -10,7 +10,7 @@ hc() {
 }
 
 # Espaço para bar e tree_style
-hc pad 0 20
+hc pad 0 30
 hc set tree_style '╾│ ├└╼─┐'
 
 # Setando Workspaces
@@ -34,7 +34,7 @@ hc set frame_padding 3
 hc set window_gap 10
 hc set window_border_width 4
 hc set window_border_normal_color "#282828"
-hc set window_border_active_color "#602733"
+hc set window_border_active_color "#5b2256"
 
 # Binds do mouse
 hc mousebind Mod4-B1 move
