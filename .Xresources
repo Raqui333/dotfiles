@@ -5,15 +5,13 @@ URxvt.cursorBlink: true
 URxvt.perl-ext-common: default,selection-to-clipboard,tabbed,matcher
 URxvt.saveLines: 10000
 URxvt.geometry: 100x30
-URxvt.url-launcher: /usr/local/bin/firefox
-URxvt.matcher.button: 1
 URxvt.termName: rxvt-256color
 
 !! Colors
 URxvt.background: #080808
 URxvt.foreground: #cdcdcd
 
-URxvt.internalBorder: 10
+URxvt.internalBorder: 30
 
 URxvt.tab-bg: 233
 URxvt.tab-fg: 5
