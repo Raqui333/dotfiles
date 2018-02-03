@@ -35,7 +35,7 @@ Window() {
 		title="None"
 	fi
 
-	echo " ^fg($COR)^i($icon)^fg()  $title"
+	echo "^fg($COR)^i($icon)^fg() $title"
 }
 
 Mem() {
@@ -87,16 +87,24 @@ Hora() {
 }
 
 Works() {
-        wmctrl -d | awk '{print $2 $NF}' ORS=" " | sed \
-        -e "s/\*W[0-4]/^bg($COR)^fg(#000000)  &  ^bg()^fg()/" \
-        -e "s/\-W[0-4]/^bg(#777777)^fg(#000000)  &  ^bg()^fg()/g" \
-        -e "s/\*W[5-9]/^bg($COR) ^bg()/" \
-        -e "s/\-W[5-9]//g" \
-        -e "s/\*\|\-//g" \
-        -e "s/W1/TERM/" \
-        -e "s/W2/MSG/" \
-        -e "s/W3/WEB/" \
-        -e "s/W4/OTHER/"
+        declare posWork
+        command=$(wmctrl -d | awk '/*/{print $NF}')
+        if [[ $command =~ W[6-9] ]]
+        then
+                posWork="^bg($COR)^fg(#000000) ${command/W/} ^bg()^fg()"
+        fi
+
+        works=$(wmctrl -d | awk '{print $2 $NF}' ORS=" " | head -c19 | sed \
+                -e "s/\*W[0-5]/^bg($COR)^fg(#000000)  &  ^bg()^fg()/" \
+                -e "s/\-W[0-5]/^bg(#777777)^fg(#000000)  &  ^bg()^fg()/g" \
+                -e "s/\*\|\-//g" \
+                -e "s/W1/TERM/" \
+                -e "s/W2/MSG/" \
+                -e "s/W3/WEB/" \
+                -e "s/W4/CODE/" \
+                -e "s/W5/OTHER/")
+        
+        echo "$works $posWork"
 }
 
 User() {
