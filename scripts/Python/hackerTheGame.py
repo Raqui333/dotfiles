@@ -21,7 +21,7 @@ class color:
     purple      = "\033[0;35m"
     light_blue  = "\033[0;36m"
     white       = "\033[0;37m"
-    
+
     class bold:
         red         = "\033[1;31m"
         green       = "\033[1;32m"
@@ -31,8 +31,18 @@ class color:
         light_blue  = "\033[1;36m"
         white       = "\033[1;37m"
 
+## Features
+class feature:
+    italic       = "\033[3m"
+    underline    = "\033[4m"
+    alert        = "\033[5m"
+    background   = "\033[7m"
+
 ## Title of the game
-gameTitle = color.bold.red + " Hacker - The Game\n " + color.reset
+gameTitle = color.bold.red + \
+        "░█░█░█▀█░█▀▀░█░█░█▀▀░█▀▄░░░░░░░░░▀█▀░█░█░█▀▀░░░█▀▀░█▀█░█▄█░█▀▀\n" \
+        "░█▀█░█▀█░█░░░█▀▄░█▀▀░█▀▄░░░▄▄▄░░░░█░░█▀█░█▀▀░░░█░█░█▀█░█░█░█▀▀\n" \
+        "░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░▀░░░░░░░░░░▀░░▀░▀░▀▀▀░░░▀▀▀░▀░▀░▀░▀░▀▀▀\n" + color.reset
 
 ## Main menu of the game
 def startMenu(option):
@@ -72,19 +82,29 @@ def aboutMenu(option):
 
 ## The Game
 def main():
+    system("clear")
     print(gameTitle)
 
-    print(color.green + " Welcome to the Hacker Area \n")
+    print(color.green + feature.underline + " Welcome to the Hacker Area \n")
 
-    ## little progress bar
-    print(color.green + " Booting Device: ", end="")
-    for i in range(0,16):
-        print(color.bold.green + "#", end="", flush=True)
-        sleep(0.2)
+    print(color.green + " Booting Device: \n")
+    
+    ## Hide Cursor
+    system("setterm -cursor off")
+
+    ## Progress Bar
+    print("   " , end="")
+    
+    for i in range(0,30):
+        print(color.bold.green + feature.background + " ", end="", flush=True)
+        sleep(0.03)
 
     ## Game
     sleep(1)
-    print(color.green + "\n\n in construction ")
+    print(color.green + "\n\n in construction \n")
+
+    ## Back Cursor
+    system("setterm -cursor on")
 
 ## Menu
 def menu(option):
