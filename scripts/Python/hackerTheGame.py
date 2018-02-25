@@ -7,8 +7,34 @@
 ## and of course learn with it
 
 ## import modules
+import json
+
 from time import sleep
 from os import system
+
+## Create Json File
+data = {
+            'user':{
+                'name':'admin',
+                'password':'12345'
+            },
+            'hardware':{
+                'cpu':1,
+                'ram':1,
+                'internet':1
+            },
+            'software':{
+                'anti-virus':1,
+                'encrypt':1,
+                'descrypt':1
+            }
+       }
+
+try:
+    open("info.json", "r")
+except FileNotFoundError:
+    with open("info.json", "w") as infoFile:
+        json.dump(data, infoFile)
 
 ## Colors
 class color:
@@ -80,12 +106,32 @@ def aboutMenu(option):
     if anwser == None: anwser = input(color.reset + "> ")
     return anwser
 
+def login():
+    with open("info.json", "r") as infoFile:
+        info = json.load(infoFile)
+
+    if info["user"]["name"] == "admin" and info["user"]["password"] == "12345":
+        name = input("Choose a name: ")
+        password = input("Choose a password: ")
+
+        info["user"]["name"] = name
+        info["user"]["password"] = password
+
+        with open("info.json", "w") as infoFile:
+            json.dump(info, infoFile)
+
+        login()
+    else:
+        loginName = input("name: ")
+        loginPassword = input("password: ")
+
+        if loginName == info["user"]["name"] and loginPassword == info["user"]["password"]:
+            return True
+
 ## The Game
 def main():
     system("clear")
     print(gameTitle)
-
-    print(color.green + feature.underline + " Welcome to the Hacker Area \n")
 
     print(color.green + " Booting Device: \n")
     
@@ -101,10 +147,44 @@ def main():
 
     ## Game
     sleep(1)
-    print(color.green + "\n\n in construction \n")
+    
+    print(color.green + feature.underline + "\n\n Welcome to the Hacker Area \n" + color.reset)
 
     ## Back Cursor
     system("setterm -cursor on")
+    
+    ## Login
+    loginResult = login()
+
+    if loginResult != True:
+        print(color.bold.red + "\n Access Denied \n")
+        sleep(1)
+        main()
+    
+    with open("info.json", "r") as infoFile:
+        info = json.load(infoFile)
+
+    name = info["user"]["name"]
+    
+    cpu       = info["hardware"]["cpu"]
+    ram       = info["hardware"]["ram"]
+    internet  = info["hardware"]["internet"]
+
+    anti_virus  = info["software"]["anti-virus"]
+    encrypt     = info["software"]["encrypt"]
+    descrypt    = info["software"]["descrypt"]
+
+    print(color.bold.green + "\n Welcome, " + name + color.reset + "\n")
+
+    print("CPU .........: Level ", cpu)
+    print("RAM .........: Level ", ram)
+    print("Internet ....: Level ", internet, "\n")
+
+    print("Anti-Virus ..: Level ", anti_virus)
+    print("Encrypt .....: Level ", encrypt)
+    print("Descrypt ....: Level ", descrypt, "\n")
+
+    input("> ")
 
 ## Menu
 def menu(option):
