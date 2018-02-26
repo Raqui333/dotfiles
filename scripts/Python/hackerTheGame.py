@@ -24,9 +24,12 @@ data = {
                 'internet':1
             },
             'software':{
-                'anti-virus':1,
+                'anti_virus':1,
                 'encrypt':1,
                 'descrypt':1
+            },
+            'money':{
+                'bit_coins':100
             }
        }
 
@@ -111,6 +114,8 @@ def login():
         info = json.load(infoFile)
 
     if info["user"]["name"] == "admin" and info["user"]["password"] == "12345":
+        print(color.bold.red + " Not use Login: admin and password: 12345 \n" + color.reset)
+
         name = input("Choose a name: ")
         password = input("Choose a password: ")
 
@@ -120,6 +125,7 @@ def login():
         with open("info.json", "w") as infoFile:
             json.dump(info, infoFile)
 
+        print()
         login()
     else:
         loginName = input("name: ")
@@ -127,6 +133,80 @@ def login():
 
         if loginName == info["user"]["name"] and loginPassword == info["user"]["password"]:
             return True
+
+def missions(mission):
+    if mission == "1":
+        print(color.bold.light_blue + "  Misson 1: Invade the server local")
+        print(color.bold.purple + "    invade the server local and exit \n")
+        
+        print(color.red + " type this 127.0.0.1" + color.reset)
+        anwser = input("nmap -A -T4 ")
+
+        if anwser == "127.0.0.1":
+            print(color.bold.green)
+            print(" Starting Nmap Scan on ' 127.0.0.1 '...")
+            sleep(2)
+            print(" Scan Ports...")
+            sleep(0.1)
+            print(" Scan OS...\n")
+            sleep(0.1)
+
+            print(" PORTS        STATE       SERVICE")
+            
+            line1 = " 22/tcp       open        http        hack.net"
+            line2 = " 80/tcp       open        http        linux-GNU"
+            line3 = " 2222/tcp     close       ftp         nsa.org\n"
+            
+            for i in line1, line2, line3:
+                print(i)
+                sleep(0.05)
+
+            sleep(0.1)
+
+            print("OS:")
+            line1 = "|   GNU/Linux:"
+            line2 = "|      192.198.5.2:"
+            line3 = "|         Version:"
+            line4 = "|           name: Arch Linux"
+            line5 = "|           kernel: 4.15.2-ARCH"
+            line6 = "|           site: archlinux.org"
+            line7 = "|         TCP PORTS:"
+            line8 = "|           22     <open>"
+            line9 = "|           80     <open>"
+            line10 = "|           2222   <close>\n"
+            
+            for i in line1, line2, line3, line4, line5, line6, line7, line8, line9, line10:
+                print(i)
+                sleep(0.05)
+
+            sleep(1)
+
+            print("Nmap done: 1 IP address (1 host up), 2 ports open, 1 OS detected\n")
+            print(color.reset)
+
+            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
+
+        else:
+            print(anwser, color.bold.red + "is not a valid IP" + color.reset)
+
+def playMenu():
+    print(color.bold.green + " [0] " + color.bold.white + "-" + color.bold.yellow + " Quit ")
+    print(color.bold.green + " [1] " + color.bold.white + "-" + color.bold.yellow + " Hardware ")
+    print(color.bold.green + " [2] " + color.bold.white + "-" + color.bold.yellow + " Software ")
+    print(color.bold.green + " [4] " + color.bold.white + "-" + color.bold.yellow + " Missions \n" + color.reset)
+
+    anwser = input("> ")
+
+    if anwser == "0":
+        quit()
+    elif anwser == "1":
+        print("nothing")
+    elif anwser == "2":
+        print("nothing")
+    elif anwser == "3":
+        print("nothing")
+    elif anwser == "4":
+        missions("1")
 
 ## The Game
 def main():
@@ -165,26 +245,12 @@ def main():
         info = json.load(infoFile)
 
     name = info["user"]["name"]
+    coins = info["money"]["bit_coins"]
     
-    cpu       = info["hardware"]["cpu"]
-    ram       = info["hardware"]["ram"]
-    internet  = info["hardware"]["internet"]
+    print(color.bold.green + "\n Welcome, " + name)
+    print(color.bold.red + "    Status - Name: " + name + ", BitCoins: ", coins, "\n")
 
-    anti_virus  = info["software"]["anti-virus"]
-    encrypt     = info["software"]["encrypt"]
-    descrypt    = info["software"]["descrypt"]
-
-    print(color.bold.green + "\n Welcome, " + name + color.reset + "\n")
-
-    print("CPU .........: Level ", cpu)
-    print("RAM .........: Level ", ram)
-    print("Internet ....: Level ", internet, "\n")
-
-    print("Anti-Virus ..: Level ", anti_virus)
-    print("Encrypt .....: Level ", encrypt)
-    print("Descrypt ....: Level ", descrypt, "\n")
-
-    input("> ")
+    playMenu()
 
 ## Menu
 def menu(option):
