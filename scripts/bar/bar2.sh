@@ -107,10 +107,19 @@ Works() {
         echo "$works $posWork"
 }
 
-User() {
+Kernel() {
         icon="$ICONS/Gentoo.xbm"
-        command=$(wmctrl -m | awk -F': ' '/Name/{print $NF}')
-        echo "^fg($COR)^i($icon)^fg() $command"
+	current=$(uname -r)
+	latest=$(curl -s "https://www.kernel.org/" | grep "<strong>" | sed -n 's/[^0-9.]//g;3p')
+        
+	if [[ $current = $latest ]]
+	then
+		command=$current
+	else
+		command="$latest -> $current"
+	fi
+
+	echo "^fg($COR)^i($icon)^fg() $command"
 }
 
 dzen2 -p -bg "#080808" -h "30" -e "button3=" &
@@ -132,6 +141,6 @@ done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h
 sleep 1
 
 while true;do
-    echo "$(User)     $(Musica)     $(Volume)     $(Hora) "
+    echo "$(Kernel)     $(Musica)     $(Volume)     $(Hora) "
 	sleep 2
 done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "868" &
