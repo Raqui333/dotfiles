@@ -41,8 +41,9 @@ then
                 cp /proc/config.gz .
                 zcat config.gz > .config
         elif [[ -e '/boot/config-'$current ]]
+	then
                 cp '/boot/config-'$current .config
-        else
+	else
                 echo "Configuration file not found, make sure you have at least /boot or /proc enabled"
                 exit -1
         fi
