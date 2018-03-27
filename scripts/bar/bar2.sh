@@ -129,7 +129,7 @@ sleep 1
 while true;do
     echo "$(Works)"
     sleep 2
-done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "8" &
+done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "7" &
 
 sleep 1
 
