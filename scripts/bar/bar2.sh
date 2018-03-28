@@ -2,7 +2,7 @@
 
 killall dzen2
 ICONS="$HOME/scripts/icons"
-COR="#6d2967"
+COR="#df4353"
 
 Window() {
 	command=$(herbstclient layout | awk '/FOCUS/{gsub(/[^[:alpha:][:blank:]]/,"");print $1}')
@@ -96,7 +96,7 @@ Works() {
 
         works=$(wmctrl -d | awk '{print $2 $NF}' ORS=" " | head -c19 | sed \
                 -e "s/\*W[0-5]/^bg($COR)^fg(#000000)  &  ^bg()^fg()/" \
-                -e "s/\-W[0-5]/^bg(#777777)^fg(#000000)  &  ^bg()^fg()/g" \
+                -e "s/\-W[0-5]/^bg(#666666)^fg(#000000)  &  ^bg()^fg()/g" \
                 -e "s/\*\|\-//g" \
                 -e "s/W1/TERM/" \
                 -e "s/W2/MSG/" \
@@ -143,4 +143,4 @@ sleep 1
 while true;do
     echo "$(Kernel)     $(Musica)     $(Volume)     $(Hora) "
 	sleep 2
-done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "868" &
+done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "820" &
