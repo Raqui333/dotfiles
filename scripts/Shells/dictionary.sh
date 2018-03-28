@@ -17,7 +17,7 @@ then
 	then
 		echo ${conjugation} | sed 's/^/    └> /g;s/,$/\n/'
 	else
-		echo -e "\033[1;32m    regular verb\033[00m\n"
+		echo -e "\033[1;32m    is not a verb\033[00m\n"
 	fi
 
 	echo -e "\033[1;32m Examples:\033[00m"
