@@ -26,7 +26,9 @@ Window() {
 	window_name_length=$(echo $window_name | wc -c)
 
 	if [ "$window_name" ];then
-		if [ "$window_name_length" -gt 21 ];then
+		if [[ "$window_name" =~ ^emerge ]];then
+			title="$(echo $window_name | awk '{print $2"/"$4, $5}' | sed 's/\(\/.*\)-.*/\1/;s/[()]//g')"
+		elif [ "$window_name_length" -gt 21 ];then
 			title=$(echo $window_name | head -c20 | sed 's/ $//;s/$/.../')
 		else
 			title=$window_name
@@ -136,11 +138,11 @@ sleep 1
 while true;do
     echo " $(Window)     $(Pacotes)     $(Temp)     $(Mem)"
 	sleep 2
-done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "430" &
+done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "535" &
 
 sleep 1
 
 while true;do
     echo "$(Kernel)     $(Musica)     $(Volume)     $(Hora) "
 	sleep 2
-done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "820" &
+done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "806" &
