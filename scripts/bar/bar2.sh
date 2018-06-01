@@ -2,7 +2,7 @@
 
 killall dzen2
 ICONS="$HOME/scripts/icons"
-COR="#df4353"
+COR="#3e7bc0"
 
 Window() {
 	command=$(herbstclient layout | awk '/FOCUS/{gsub(/[^[:alpha:][:blank:]]/,"");print $1}')
@@ -27,7 +27,7 @@ Window() {
 
 	if [ "$window_name" ];then
 		if [[ "$window_name" =~ ^emerge ]];then
-			title="$(echo $window_name | awk '{print $2"/"$4, $5}' | sed 's/\(\/.*\)-.*/\1/;s/[()]//g')"
+			title="$(echo $window_name | awk '{print $2"/"$4, $5}' | sed 's/\(\/[[:alnum:]]*\)-.*/\1/;s/[()]//g')"
 		elif [ "$window_name_length" -gt 21 ];then
 			title=$(echo $window_name | head -c20 | sed 's/ $//;s/$/.../')
 		else
@@ -37,25 +37,25 @@ Window() {
 		title="None"
 	fi
 
-	echo "^fg($COR)^i($icon)^fg() $title"
+	echo "^fg(#1fddaf)^i($icon)^fg() $title"
 }
 
 Mem() {
 	icon="$ICONS/Mem.xbm"
 	command=$(free -h | awk '/Mem/{print $3, $2}' OFS=' / ')
-	echo "^fg($COR)^i($icon)^fg() $command"
+	echo "^fg(#db6013)^i($icon)^fg() $command"
 }
 
 Temp() {
 	icon="$ICONS/Temp.xbm"
 	command=$(sensors | awk '/Core/{printf("%i°C\n", $3)}')
-	echo "^fg($COR)^i($icon)^fg() $command"
+	echo "^fg(#e720d3)^i($icon)^fg() $command"
 }
 
 Pacotes() {
 	icon="$ICONS/Packages.xbm"
 	command=$(ls -d /var/db/pkg/*/* | wc -l)
-	echo "^ca(1,~/scripts/Shells/sysinfo.sh)^fg($COR)^i($icon)^fg() $command^ca()"
+	echo "^ca(1,~/scripts/Shells/sysinfo.sh)^fg(#aae929)^i($icon)^fg() $command^ca()"
 }
 
 Musica() {
@@ -73,19 +73,19 @@ Musica() {
 		command="Paused"
 	fi
 
-	echo "^ca(1,~/scripts/Shells/mpd.sh)^ca(4,mpc volume +10)^ca(5,mpc volume -10)^fg($COR)^i($icon)^fg() $command^ca()^ca()^ca()"
+	echo "^ca(1,~/scripts/Shells/mpd.sh)^ca(4,mpc volume +10)^ca(5,mpc volume -10)^fg(#e720d3)^i($icon)^fg() $command^ca()^ca()^ca()"
 }
 
 Volume() {
 	icon="$ICONS/Volume.xbm"
-	command=$(amixer get Master | awk '/[0-9]%/{gsub(/[][]/,"");print $5}' | head -1 | gdbar -h "3" -bg "#242424" -fg "$COR" -w "70")
-	echo "^ca(4,amixer set Master 5%+)^ca(5,amixer set Master 5%-)^fg($COR)^i($icon)^fg() $command^ca()^ca()"
+	command=$(amixer get Master | awk '/[0-9]%/{gsub(/[][]/,"");print $5}' | head -1 | gdbar -h "3" -bg "#242424" -fg "#aae929" -w "70")
+	echo "^ca(4,amixer set Master 5%+)^ca(5,amixer set Master 5%-)^fg(#aae929)^i($icon)^fg() $command^ca()^ca()"
 }
 
 Hora() {
 	icon="$ICONS/Relogio.xbm"
 	command=$(date +'%I:%M %p')
-	echo "^ca(1,~/scripts/Shells/calendario.sh)^fg($COR)^i($icon)^fg() $command^ca()"
+	echo "^ca(1,~/scripts/Shells/calendario.sh)^fg(#1fddaf)^i($icon)^fg() $command^ca()"
 }
 
 Works() {
@@ -97,8 +97,8 @@ Works() {
         fi
 
         works=$(wmctrl -d | awk '{print $2 $NF}' ORS=" " | head -c19 | sed \
-                -e "s/\*W[0-5]/^bg($COR)^fg(#000000)  &  ^bg()^fg()/" \
-                -e "s/\-W[0-5]/^bg(#666666)^fg(#000000)  &  ^bg()^fg()/g" \
+                -e "s/\*W[0-5]/^bg(#cdcdcd)^fg(#000000)  &  ^bg()^fg()/" \
+                -e "s/\-W[0-5]/^bg(#5c585e)^fg(#000000)  &  ^bg()^fg()/g" \
                 -e "s/\*\|\-//g" \
                 -e "s/W1/TERM/" \
                 -e "s/W2/MSG/" \
@@ -121,28 +121,28 @@ Kernel() {
 		command="$latest -> $current"
 	fi
 
-	echo "^fg($COR)^i($icon)^fg() $command"
+	echo "^fg(#db6013)^i($icon)^fg() $command"
 }
 
-dzen2 -p -bg "#080808" -h "30" -e "button3=" &
+dzen2 -p -bg "#050505" -h "30" -e "button3=" &
 
 sleep 1
 
 while true;do
     echo "$(Works)"
     sleep 2
-done | dzen2 -p -ta "c" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "7" &
+done | dzen2 -p -ta "c" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "14" -e "button3=" -y "7" &
 
 sleep 1
 
 while true;do
     echo " $(Window)     $(Pacotes)     $(Temp)     $(Mem)"
 	sleep 2
-done | dzen2 -p -ta "l" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "535" &
+done | dzen2 -p -ta "l" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -w "535" &
 
 sleep 1
 
 while true;do
     echo "$(Kernel)     $(Musica)     $(Volume)     $(Hora) "
 	sleep 2
-done | dzen2 -p -ta "r" -bg "#080808" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "806" &
+done | dzen2 -p -ta "r" -bg "#050505" -fg "#777777" -fn "FantasqueSansMono-9" -h "30" -e "button3=" -x "806" &
