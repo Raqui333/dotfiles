@@ -84,7 +84,18 @@ Volume() {
 
 Hora() {
 	icon="$ICONS/Relogio.xbm"
-	command=$(date +'%I:%M %p')
+	hour=$(date +'%H')
+
+	if [[ $hour -le 11 ]]
+	then
+		command="$(date +'%I:%M') DM"
+	elif [[ $hour -ge 12 && $hour -le 17 ]]
+	then
+		command="$(date +'%I:%M') DT"
+	else
+		command="$(date +'%I:%M') DN"
+	fi
+
 	echo "^ca(1,~/scripts/Shells/calendario.sh)^fg(#1fddaf)^i($icon)^fg() $command^ca()"
 }
 
