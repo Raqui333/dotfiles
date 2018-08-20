@@ -43,7 +43,7 @@ fileOpen.closed
 kernel = re.search("BOOT_IMAGE=.*? ", KernelFile)
 kernel = re.sub(".*?vmlinuz-", "", kernel.group(0))
 
-# Data & Time Status
+## Data & Time Status
 now = datetime.now()
 
 hour = now.hour
@@ -55,8 +55,17 @@ elif hour >= 12 and hour <= 17:
 else:
     timeStatus = now.strftime("%I:%M DN")
 
+## Packages
+with open("/var/lib/dpkg/status") as fileOpen:
+    packagesFile = fileOpen.read()
+
+fileOpen.closed
+
+packages = re.findall("Status: install ok installed", packagesFile)
+
 ## Final Print
 print("^fg(#ff0000) ^i(/home/kleber/scripts/icons/Mem.xbm)^fg()", int(memTotal/1024), "MiB /", int(memUsed/1024), "MiB",
       "^fg(#ff0000) ^i(/home/kleber/scripts/icons/User.xbm)^fg()", os,
+      "^fg(#ff0000) ^i(/home/kleber/scripts/icons/Packages.xbm)^fg()", len(packages),
       "^fg(#ff0000) ^i(/home/kleber/scripts/icons/Gentoo.xbm)^fg()", kernel,
       "^fg(#ff0000) ^i(/home/kleber/scripts/icons/Relogio.xbm)^fg()", timeStatus)
