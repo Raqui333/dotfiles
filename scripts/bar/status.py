@@ -29,7 +29,7 @@ memUsed = memTotal - memFree - buffers - cached - slab
 memTotal = float(memTotal/1024/1024)
 
 if int(memUsed/1024) > 1024: memUsed, suffix = float(memUsed/1024/1024), "G"
-else: memUsed, suffix = memUsed, "MiB"
+else: memUsed, suffix = inr(memUsed/1024), "MiB"
 
 ## Os Status
 with open("/etc/os-release") as fileOpen: OsFile = fileOpen.read()
@@ -61,7 +61,7 @@ if Path("/usr/bin/apt").exists():
 
     packages = len(re.findall("Status: install ok installed", packagesFile)) ## Debian's
 
-if Path("/usr/bin/emerge").exists(): packages = len(Path("/var/db/pkg").glob("*/*")) ## Gentoo's
+if Path("/usr/bin/emerge").exists(): packages = len(list(Path("/var/db/pkg").glob("*/*"))) ## Gentoo's
 
 ## Final Print
 print("^fg(#ff0000) ^i({}/Gentoo.xbm)^fg() {}".format(icons, kernel),
