@@ -12,6 +12,7 @@ toInt x = read x :: Int
 getMbFromKb :: Int -> Int
 getMbFromKb x = x `div` 1024
 
+main :: IO ()
 main = do
     -- USER and HOST
     --host <- getEnv "HOST"
@@ -20,8 +21,7 @@ main = do
     putStrLn $ replicate 4 ' ' ++ user ++ "@gentoo\n" -- hostname hard coded
 
     -- MEM
-    procFile <- openFile "/proc/meminfo" ReadMode
-    memInfo  <- hGetContents procFile
+    memInfo <- readFile "/proc/meminfo"
     
     let memInfo' = words memInfo
     
@@ -33,25 +33,20 @@ main = do
         memUsed  = memTotal - memFree - buffers - cached - sLab
     
     putStrLn $ "Mem\t  | \t" ++ (show $ getMbFromKb memUsed) ++ "MiB / " ++ (show $ getMbFromKb memTotal) ++ "MiB"
-    hClose procFile
     
     -- Kernel
-    cmdlineFile <- openFile "/proc/cmdline" ReadMode
-    kernelInfo  <- hGetContents cmdlineFile
+    kernelInfo <- readFile "/proc/cmdline"
     
     let kernelInfo' = words kernelInfo
     
     putStrLn $ "Kernel\t  | \t" ++ (drop 25 $ kernelInfo'!!0)
-    hClose cmdlineFile
     
     -- OS
-    osReleaseFile <- openFile "/etc/os-release" ReadMode
-    osInfo        <- hGetContents osReleaseFile
+    osInfo <- readFile "/etc/os-release"
     
     let osInfo' = words osInfo
     
     putStrLn $ "Os\t  | \t" ++ (drop 5 $ osInfo'!!0)
-    hClose osReleaseFile
     
     -- SHELL
     shell <- getEnv "SHELL"
