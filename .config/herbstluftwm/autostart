@@ -1,19 +1,22 @@
 #!/bin/bash
 # By: https://github.com/UserUnavailable
 
-# Iniciar Bar
-/home/anonimo/scripts/bar/bar2.sh &
+## startup apps
+#$HOME/scripts/bar/bar2.sh &
+setxkbmap -model abnt2 -layout br -variant abnt2 &
+$HOME/.fehbg &
+sxhkd &
 
-# Facilitar nossa vida
+## to not write herbstclient 1001 times
 hc() {
 	herbstclient "${@}"
 }
 
-# Espaço para bar e tree_style
-hc pad 0 30
+## bar space and tree_style
+hc pad 0 0
 hc set tree_style '╾│ ├└╼─┐'
 
-# Setando Workspaces
+## workspaces
 hc rename default W1
 hc add W2
 hc add W3
@@ -24,25 +27,26 @@ hc add W7
 hc add W8
 hc add W9
 
-# Configuração dos frame
+## frame configuration
 hc set frame_gap 0
 hc set frame_border_width 0
 hc set frame_bg_transparent 1
 hc set frame_padding 3
 
-# Configuração das janelas
+## window configuration
 hc set window_gap 10
 hc set window_border_width 4
 hc set window_border_normal_color "#282828"
-hc set window_border_active_color "#5b2256"
+hc set window_border_active_color "#cdcdcd"
 
-# Binds do mouse
+## hotkeys
 hc mousebind Mod4-B1 move
 hc mousebind Mod4-B3 resize
 
-# Regras do wm
+## window manager rules
 hc unrule -F
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
+hc rule windowtype~"_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)" pseudotile=on focus=on
+hc rule title="Media viewer" focus=on
 
-# Para algumas BARs
+## to not manage bar
 hc rule windowtype="_NET_WM_WINDOW_TYPE_DOCK" manage=off
