@@ -29,7 +29,7 @@ memUsed = memTotal - memFree - buffers - cached - slab
 memTotal = float(memTotal/1024/1024)
 
 if int(memUsed/1024) > 1024: memUsed, suffix = float(memUsed/1024/1024), "G"
-else: memUsed, suffix = inr(memUsed/1024), "MiB"
+else: memUsed, suffix = int(memUsed/1024), "MiB"
 
 ## Os Status
 with open("/etc/os-release") as fileOpen: OsFile = fileOpen.read()
