@@ -3,7 +3,7 @@
 killall dzen2
 
 ICONS="$HOME/scripts/icons"
-SPACE="          "
+SPACE="       "
 
 window() {
 	command=$(herbstclient layout | awk '/FOCUS/{gsub(/[^[:alpha:][:blank:]]/,"");print $1}')
