@@ -2,10 +2,8 @@
 # By: https://github.com/UserUnavailable
 
 ## startup apps
-#$HOME/scripts/bar/bar2.sh &
+$HOME/scripts/bar/lazyBar.sh &
 setxkbmap -model abnt2 -layout br -variant abnt2 &
-$HOME/.fehbg &
-sxhkd &
 
 ## to not write herbstclient 1001 times
 hc() {
@@ -13,7 +11,7 @@ hc() {
 }
 
 ## bar space and tree_style
-hc pad 0 0
+hc pad 0 30
 hc set tree_style '╾│ ├└╼─┐'
 
 ## workspaces
