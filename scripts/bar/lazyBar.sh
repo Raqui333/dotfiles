@@ -1,5 +1,7 @@
 #!/bin/bash
 
+killall dzen2
+
 ICONS="$HOME/scripts/icons"
 SPACE="          "
 
@@ -41,7 +43,7 @@ window() {
 
 volume() {
 	icon="$ICONS/Volume.xbm"
-	command=$(amixer get Master | awk '/[0-9]%/{gsub(/[][]/,"");print $5}' | head -1 | gdbar -h "3" -bg "#242424" -fg "#aae929" -w "70")
+	command=$(amixer get Master | awk '{gsub(/[][%]/,"")}; /Front Left:/{lf=$5}; /Front Right:/{rf=$5}; END{printf("%i%\n", lf+rf)}')
 	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
 }
 
@@ -85,6 +87,6 @@ temp() {
 }
 
 while :; do
-          echo "$(window)$SPACE$(temp)$SPACE$(mem)$SPACE$(packages)$SPACE$(kernel)$SPACE$(dtime)"
+          echo "$(window)$SPACE$(temp)$SPACE$(mem)$SPACE$(packages)$SPACE$(kernel)$SPACE$(volume)$SPACE$(dtime)"
           sleep 2
 done | dzen2 -p -h 30 -fn fantasquesansmono-9 -fg #777777 &
