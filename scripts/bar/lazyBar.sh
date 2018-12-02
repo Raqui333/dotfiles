@@ -2,8 +2,10 @@
 
 killall dzen2
 
+LATEST_KERNEL=$(curl -s "https://www.kernel.org/" | awk '/<strong>/{gsub(/[^0-9.]/,"");if (NR==92) print}')
 ICONS="$HOME/scripts/icons"
 SPACE="       "
+COLOR="#cdcdcd"
 
 window() {
 	command=$(herbstclient layout | awk '/FOCUS/{gsub(/[^[:alpha:][:blank:]]/,"");print $1}')
@@ -23,7 +25,7 @@ window() {
 			;;
 	esac
 
-	window_name=$(xdotool getactivewindow getwindowname)
+	window_name=$(xdotool getactivewindow getwindowname 2> /dev/null)
 	window_name_length=$(echo $window_name | wc -c)
 
 	if [ "$window_name" ];then
@@ -38,19 +40,19 @@ window() {
 		title="None"
 	fi
 
-	echo "^fg(#cdcdcd)^i($icon)^fg() $title"
+	echo "^fg($COLOR)^i($icon)^fg() $title"
 }
 
 volume() {
 	icon="$ICONS/Volume.xbm"
 	command=$(amixer get Master | awk '{gsub(/[][%]/,"")}; /Front Left:/{lf=$5}; /Front Right:/{rf=$5}; END{printf("%i%\n", lf+rf)}')
-	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+	echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 kernel() {
         icon="$ICONS/Gentoo.xbm"
 	current=$(uname -r)
-	latest=$(curl -s "https://www.kernel.org/" | grep "<strong>" | sed -n 's/[^0-9.]//g;3p')
+	latest=$LATEST_KERNEL
         
 	if [[ $current = $latest ]]
 	then
@@ -59,34 +61,34 @@ kernel() {
 		command="$latest -> $current"
 	fi
 
-	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+	echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 packages() {
 	icon="$ICONS/Packages.xbm"
 	command=$(ls -d /var/db/pkg/*/* | wc -l)
-	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+	echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 dtime() {
           icon="$ICONS/Relogio.xbm"
           command=$(date +'%b %d/%y, %I:%M %P')
-          echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+          echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 mem() {
 	icon="$ICONS/Mem.xbm"
 	command=$(free -h | awk '/Mem/{print $3, $2}' OFS=' / ')
-	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+	echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 temp() {
 	icon="$ICONS/Temp.xbm"
 	command=$(sensors | awk '/Core/{printf("%i°C\n", $3)}')
-	echo "^fg(#cdcdcd)^i($icon)^fg() $command"
+	echo "^fg($COLOR)^i($icon)^fg() $command"
 }
 
 while :; do
           echo "$(window)$SPACE$(temp)$SPACE$(mem)$SPACE$(packages)$SPACE$(kernel)$SPACE$(volume)$SPACE$(dtime)"
           sleep 2
-done | dzen2 -p -h 30 -fn fantasquesansmono-9 -fg #777777 &
+done | dzen2 -p -h '30' -fn 'fantasquesansmono-9' -fg '#777777' -e 'button3=' &
