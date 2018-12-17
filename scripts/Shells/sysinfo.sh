@@ -2,14 +2,14 @@
 # By: https://github.com/UserUnavailable
 
 # cor
-FG="#3e7bc0"
+FG="#e87b1c"
 
 # font bold e normal
 bold="FantasqueSansMono:bold:size=9"
 normal="FantasqueSansMono:size=9"
 
 # variaveis das infos
-user="$USER@$(uname -n)"
+user="raqui@$(uname -n)"
 line=$(echo 100 | gdbar -h '2' -ss '2' -fg '#777777' -bg '#121212')
 
 os="$(uname -nm)"
@@ -23,9 +23,9 @@ cpu=$(awk -F': ' '/model name/{gsub(/\([[:alpha:]]+)|CPU([[:blank:]]{2,})?/,"");
 mem=$(free -m | awk '/Mem/{print $3"MiB", $2"MiB"}' OFS=' / ')
 
 wm=$(wmctrl -m | awk -F': ' '/Name/{print $NF}')
-icon=$(awk -F'=' '/gtk-icon-theme-name/{print $NF}' ~/.config/gtk-3.0/settings.ini) 
-font=$(awk -F'=' '/gtk-font-name/{print $NF}' ~/.config/gtk-3.0/settings.ini )
-theme=$(awk -F'=' '/gtk-theme-name/{print $NF}' ~/.config/gtk-3.0/settings.ini)
+icon=$(awk -F'= ' '/gtk-icon-theme-name/{print $NF}' ~/.config/gtk-3.0/settings.ini) 
+font=$(awk -F'= ' '/gtk-font-name/{print $NF}' ~/.config/gtk-3.0/settings.ini )
+theme=$(awk -F'= ' '/gtk-theme-name/{print $NF}' ~/.config/gtk-3.0/settings.ini)
 
 (
 echo "^fg($FG)Sysinfo"
@@ -46,4 +46,4 @@ echo "^p(20)^fg($FG)Wm^fg()^fn($normal) .........: $wm"
 echo "^p(20)^fg($FG)Icon^fg()^fn($normal) .......: $icon"
 echo "^p(20)^fg($FG)Font^fg()^fn($normal) .......: $font"
 echo "^p(20)^fg($FG)Theme^fg()^fn($normal) ......: $theme"
-) | dzen2 -p -fn "$bold" -bg "#050505" -fg "#777777" -x "10" -y "35" -h "14" -w "285" -l "19" -e "onstart=uncollapse;button3=exit"
+) | dzen2 -p -fn "$bold" -bg "#050505" -fg "#777777" -x "880" -y "20" -h "14" -w "285" -l "19" -e "onstart=uncollapse;button3=exit"
