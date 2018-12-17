@@ -10,7 +10,7 @@ hc() {
 }
 
 ## bar space and tree_style
-hc pad 0 30
+hc pad 0 0 0 40
 hc set tree_style '╾│ ├└╼─┐'
 
 ## workspaces
