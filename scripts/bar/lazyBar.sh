@@ -89,6 +89,6 @@ temp() {
 }
 
 while :; do
-          echo "$(window)$SPACE$(temp)$SPACE$(mem)$SPACE$(packages)$SPACE$(kernel)$SPACE$(volume)$SPACE$(dtime)"
-          sleep 2
-  done | dzen2 -p -y '725' -x '250' -w '1100' -h '30' -fn 'fantasquesansmono-9' -bg '#1f1a17' -fg '#777777' -e 'button3=' &
+	echo "$(window)$SPACE$(temp)$SPACE$(mem)$SPACE$(packages)$SPACE$(kernel)$SPACE$(volume)$SPACE$(dtime)"
+        sleep 2
+done | dzen2 -p -y '725' -x '250' -w '1100' -h '30' -fn 'Fantasquesansmono-9' -bg '#1f1a17' -fg '#777777' -e 'button3=' &
