@@ -14,7 +14,6 @@ static const char selbgcolor[]      = "#cdcdcd";
 static const char selfgcolor[]      = "#000000";
 static const unsigned int gappx     = 10;
 static const unsigned int borderpx  = 4;
-static const unsigned int barheight = 30;
 static const unsigned int snap      = 30;
 static const int showbar            = 1;
 static const int topbar             = 1;
@@ -44,14 +43,12 @@ static const Layout layouts[] = {
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} },
 
 // commands
 static const char *urxvt[]     =  { "urxvt", NULL };
 static const char *rofi[]      =  { "rofi", "-show", "run" };
-static const char *print[]     =  { "$HOME/scripts/Shells/PrintShotter.sh", "-n" };
+static const char *print[]     =  { "printshotter", "-n" };
 static const char *firefox[]   =  { "firefox", NULL };
 static const char *telegram[]  =  { "telegram", NULL };
 
