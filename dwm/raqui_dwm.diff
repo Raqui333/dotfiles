@@ -72,32 +72,3 @@
  	if (fork() == 0) {
  		if (dpy)
  			close(ConnectionNumber(dpy));
-@@ -1666,7 +1664,7 @@
- void
- tile(Monitor *m)
- {
--	unsigned int i, n, h, mw, my, ty;
-+	unsigned int gap = gappx, i, n, h, mw, my, ty;
- 	Client *c;
- 
- 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-@@ -1679,13 +1677,13 @@
- 		mw = m->ww;
- 	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
- 		if (i < m->nmaster) {
--			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
--			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
--			my += HEIGHT(c);
-+			h = (m->wh - my - gap) / (MIN(n, m->nmaster) - i);
-+			resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
-+			my += HEIGHT(c) + gap;
- 		} else {
--			h = (m->wh - ty) / (n - i);
--			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
--			ty += HEIGHT(c);
-+			h = (m->wh - ty - gap) / (n - i);
-+			resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
-+			ty += HEIGHT(c) + gap;
- 		}
- }
- 

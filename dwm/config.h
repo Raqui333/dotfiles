@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+// custom function
+static void gap_tile(Monitor *);
+
 // font
 static const char *fonts[] = {
 	"fantasquesansmono:size=8"
@@ -29,14 +32,14 @@ static const Rule rules[] = {
 // layout(s)
 static const float mfact     = 0.55; // factor of master area size [0.05..0.95]
 static const int nmaster     = 1;    // number of clients in master area
-static const int resizehints = 1;    // 1 means respect size hints in tiled resizals
+static const int resizehints = 0;    // 1 means respect size hints in tiled resizals
 
 static const Layout layouts[] = {
 	// layout
     // first entry is default
+	{ "[G]", gap_tile },
 	{ "[T]", tile },
 	{ "[M]", monocle },
-    { "[F]", NULL },
 };
 
 // key definitions
@@ -52,13 +55,18 @@ static const char *print[]     =  { "printshotter", "-n" };
 static const char *firefox[]   =  { "firefox", NULL };
 static const char *telegram[]  =  { "telegram", NULL };
 
+static const char *volume_up[] = { "amixer", "set", "Master", "5%+" };
+static const char *volume_dn[] = { "amixer", "set", "Master", "5%-" };
+
 static Key keys[] = {
 	// modifier                     key        function        argument
-    { MODKEY,                       XK_d,      spawn,          {.v = rofi } },
-    { MODKEY,                       XK_Return, spawn,          {.v = urxvt } },
-    { MODKEY,                       XK_f,      spawn,          {.v = firefox } },
-    { MODKEY,                       XK_t,      spawn,          {.v = telegram } },
-    { 0,                            XK_Print,  spawn,          {.v = print } },
+    { 0,                            XK_Print,  spawn,          { .v = print } },
+    { MODKEY,                       XK_d,      spawn,          { .v = rofi } },
+    { MODKEY,                       XK_Return, spawn,          { .v = urxvt } },
+    { MODKEY,                       XK_f,      spawn,          { .v = firefox } },
+    { MODKEY,                       XK_t,      spawn,          { .v = telegram } },
+    { MODKEY,                       XK_period, spawn,          { .v = volume_up } },
+    { MODKEY,                       XK_comma,  spawn,          { .v = volume_dn } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_Up,     focusstack,     {.i = +1 } },
     { MODKEY,                       XK_Down,   focusstack,     {.i = -1 } },
@@ -68,8 +76,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Right,  incnmaster,     {.i = -1} },
     { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
     { MODKEY,                       XK_F1,     togglefloating, {0} },
-    { MODKEY,                       XK_F2,     setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                       XK_F3,     setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_F2,     setlayout,      {.v = &layouts[0]} },
+    { MODKEY,                       XK_F3,     setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                       XK_F4,     setlayout,      {.v = &layouts[2]} },
     { MODKEY|ShiftMask,             XK_c,      quit,           {0} },
 	
     TAGKEYS( XK_1, 0)
@@ -90,3 +99,28 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 };
+
+// custom function
+void gap_tile(Monitor *m) {
+	unsigned int gap = gappx, i, n, h, mw, my, ty;
+	Client *c;
+
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (n == 0)
+		return;
+
+	if (n > m->nmaster)
+		mw = m->nmaster ? m->ww * m->mfact : 0;
+	else
+		mw = m->ww;
+	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		if (i < m->nmaster) {
+			h = (m->wh - my - gap) / (MIN(n, m->nmaster) - i);
+			resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
+			my += HEIGHT(c) + gap;
+		} else {
+			h = (m->wh - ty - gap) / (n - i);
+			resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
+			ty += HEIGHT(c) + gap;
+		}
+}
