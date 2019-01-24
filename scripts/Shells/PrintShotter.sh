@@ -16,6 +16,8 @@ exampleMsg+="   ${appName} --path ~/Desktop\n"
 exampleMsg+="   ${appName} --clipboard\n"
 exampleMsg+="   ${appName} --clipboard ~/Desktop\n"
 
+fileName=$(date +'%d-%m-%Y_%H:%M:%S.png')
+
 case ${1} in
           -h|--help)
                     echo -e ${helpMsg}
@@ -23,21 +25,21 @@ case ${1} in
                     ;;
           -p|--path)
                     test -d ${2} || ( echo "${appName}: no such file '${2}'" ; exit 2 )
-                    scrot ${2}/%d-%m-%Y_%H:%M:%S.png
+                    scrot ${2}/${fileName}
                     ;;
           -n|--no-save)
-                    scrot ~/%d-%m-%Y_%H:%M:%S.png
-                    xclip -t image/png ~/$(date +'%d-%m-%Y_%H:%M:%S.png') -selection clipboard
-                    rm ~/$(date +'%d-%m-%Y_%H:%M:%S.png')
+                    scrot ~/${fileName}
+                    xclip -t image/png ~/${fileName} -selection clipboard
+                    rm ~/${fileName}
                     ;;
           -c|--clipboard)
                     if [[ ! -z ${2} ]]; then
                               test -d ${2} || ( echo "${appName}: no such file '${2}'" ; exit 2 )
-                              scrot ${2}/%d-%m-%Y_%H:%M:%S.png
-                              xclip -t image/png ${2}/$(date +'%d-%m-%Y_%H:%M:%S.png') -selection clipboard
+                              scrot ${2}/${fileName}
+                              xclip -t image/png ${2}/${fileName} -selection clipboard
                     else
-                              scrot ~/%d-%m-%Y_%H:%M:%S.png
-                              xclip -t image/png ~/$(date +'%d-%m-%Y_%H:%M:%S.png') -selection clipboard
+                              scrot ~/${fileName}
+                              xclip -t image/png ~/${fileName} -selection clipboard
                     fi
                     ;;
           *)
