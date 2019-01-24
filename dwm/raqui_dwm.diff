@@ -1,0 +1,103 @@
+--- a/dwm.c
++++ b/dwm.c
+@@ -704,11 +704,11 @@
+ void
+ drawbar(Monitor *m)
+ {
+-	int x, xx, w, dx;
++	int x, xx, w;
+ 	unsigned int i, occ = 0, urg = 0;
+ 	Client *c;
+ 
+-	dx = (drw->fonts[0]->ascent + drw->fonts[0]->descent + 2) / 4;
++	//dx = (drw->fonts[0]->ascent + drw->fonts[0]->descent + 2) / 4;
+ 
+ 	for (c = m->clients; c; c = c->next) {
+ 		occ |= c->tags;
+@@ -716,12 +716,12 @@
+ 			urg |= c->tags;
+ 	}
+ 	x = 0;
+-	for (i = 0; i < LENGTH(tags); i++) {
+-		w = TEXTW(tags[i]);
++	for (i = 0; i < 5; i++) {
++		w = TEXTW(tags[i]) * 2 - (strlen(tags[i]) * 6);
+ 		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
+ 		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
+-		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+-		           occ & 1 << i, urg & 1 << i);
++        //drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
++		//           occ & 1 << i, urg & 1 << i);
+ 		x += w;
+ 	}
+ 	w = blw = TEXTW(m->ltsymbol);
+@@ -730,7 +730,7 @@
+ 	x += w;
+ 	xx = x;
+ 	if (m == selmon) { /* status is only drawn on selected monitor */
+-		w = TEXTW(stext);
++		w = TEXTW(stext) + 10;
+ 		x = m->ww - w;
+ 		if (x < xx) {
+ 			x = xx;
+@@ -742,9 +742,9 @@
+ 	if ((w = x - xx) > bh) {
+ 		x = xx;
+ 		if (m->sel) {
+-			drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
++			drw_setscheme(drw, &scheme[SchemeNorm]);
+ 			drw_text(drw, x, 0, w, bh, m->sel->name, 0);
+-			drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
++			//drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
+ 		} else {
+ 			drw_setscheme(drw, &scheme[SchemeNorm]);
+ 			drw_rect(drw, x, 0, w, bh, 1, 0, 1);
+@@ -1560,8 +1560,8 @@
+ 	drw_load_fonts(drw, fonts, LENGTH(fonts));
+ 	if (!drw->fontcount)
+ 		die("no fonts could be loaded.\n");
+-	bh = drw->fonts[0]->h + 2;
+-	updategeom();
++    bh = 25;
++    updategeom();
+ 	/* init atoms */
+ 	wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
+ 	wmatom[WMDelete] = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
+@@ -1632,8 +1632,6 @@
+ void
+ spawn(const Arg *arg)
+ {
+-	if (arg->v == dmenucmd)
+-		dmenumon[0] = '0' + selmon->num;
+ 	if (fork() == 0) {
+ 		if (dpy)
+ 			close(ConnectionNumber(dpy));
+@@ -1666,7 +1664,7 @@
+ void
+ tile(Monitor *m)
+ {
+-	unsigned int i, n, h, mw, my, ty;
++	unsigned int gap = gappx, i, n, h, mw, my, ty;
+ 	Client *c;
+ 
+ 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+@@ -1679,13 +1677,13 @@
+ 		mw = m->ww;
+ 	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+ 		if (i < m->nmaster) {
+-			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
+-			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
+-			my += HEIGHT(c);
++			h = (m->wh - my - gap) / (MIN(n, m->nmaster) - i);
++			resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
++			my += HEIGHT(c) + gap;
+ 		} else {
+-			h = (m->wh - ty) / (n - i);
+-			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
+-			ty += HEIGHT(c);
++			h = (m->wh - ty - gap) / (n - i);
++			resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
++			ty += HEIGHT(c) + gap;
+ 		}
+ }
+ 

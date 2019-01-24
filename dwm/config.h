@@ -12,7 +12,9 @@ static const char normfgcolor[]     = "#cdcdcd";
 static const char selbordercolor[]  = "#cdcdcd";
 static const char selbgcolor[]      = "#cdcdcd";
 static const char selfgcolor[]      = "#000000";
+static const unsigned int gappx     = 10;
 static const unsigned int borderpx  = 4;
+static const unsigned int barheight = 30;
 static const unsigned int snap      = 30;
 static const int showbar            = 1;
 static const int topbar             = 1;
@@ -55,31 +57,33 @@ static const char *telegram[]  =  { "telegram", NULL };
 
 static Key keys[] = {
 	// modifier                     key        function        argument
-	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = urxvt } },
+    { MODKEY,                       XK_d,      spawn,          {.v = rofi } },
+    { MODKEY,                       XK_Return, spawn,          {.v = urxvt } },
     { MODKEY,                       XK_f,      spawn,          {.v = firefox } },
     { MODKEY,                       XK_t,      spawn,          {.v = telegram } },
     { 0,                            XK_Print,  spawn,          {.v = print } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_Up,     focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_Down,   focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_Left,   setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,             XK_Right,  setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_F1,     togglefloating, {0} },
-	{ MODKEY,                       XK_F2,     setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_F3,     setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_Up,     focusstack,     {.i = +1 } },
+    { MODKEY,                       XK_Down,   focusstack,     {.i = -1 } },
+    { MODKEY|ControlMask,           XK_Left,   setmfact,       {.f = -0.05} },
+    { MODKEY|ControlMask,           XK_Right,  setmfact,       {.f = +0.05} },
+    { MODKEY|ShiftMask,             XK_Left,   incnmaster,     {.i = +1} },
+    { MODKEY|ShiftMask,             XK_Right,  incnmaster,     {.i = -1} },
+    { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
+    { MODKEY,                       XK_F1,     togglefloating, {0} },
+    { MODKEY,                       XK_F2,     setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                       XK_F3,     setlayout,      {.v = &layouts[2]} },
     { MODKEY|ShiftMask,             XK_c,      quit,           {0} },
 	
     TAGKEYS( XK_1, 0)
-	TAGKEYS( XK_2, 1)
-	TAGKEYS( XK_3, 2)
-	TAGKEYS( XK_4, 3)
-	TAGKEYS( XK_5, 4)
-	TAGKEYS( XK_6, 5)
-	TAGKEYS( XK_7, 6)
-	TAGKEYS( XK_8, 7)
-	TAGKEYS( XK_9, 8)
+    TAGKEYS( XK_2, 1)
+    TAGKEYS( XK_3, 2)
+    TAGKEYS( XK_4, 3)
+    TAGKEYS( XK_5, 4)
+    TAGKEYS( XK_6, 5)
+    TAGKEYS( XK_7, 6)
+    TAGKEYS( XK_8, 7)
+    TAGKEYS( XK_9, 8)
 };
 
 // button definitions
