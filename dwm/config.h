@@ -116,11 +116,11 @@ void gap_tile(Monitor *m) {
 	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
 			h = (m->wh - my - gap) / (MIN(n, m->nmaster) - i);
-			resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
+			resize(c, m->wx + gap, m->wy + my + gap, mw - (2*c->bw) - (2*gap), h - (2*c->bw) - gap, 0);
 			my += HEIGHT(c) + gap;
 		} else {
 			h = (m->wh - ty - gap) / (n - i);
-			resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - (2*gap), h - (2*c->bw) - (2*gap), 0);
+			resize(c, m->wx + mw + gap, m->wy + ty + gap, m->ww - mw - (2*c->bw) - (2*gap), h - (2*c->bw) - gap, 0);
 			ty += HEIGHT(c) + gap;
 		}
 }
