@@ -1,5 +1,14 @@
---- a/dwm.c
-+++ b/dwm.c
+--- a	2019-01-25 22:15:16.932842661 -0200
++++ dwm.c	2019-01-25 22:21:35.650824898 -0200
+@@ -59,7 +59,7 @@
+ 
+ /* enums */
+ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+-enum { SchemeNorm, SchemeSel, SchemeLast }; /* color schemes */
++enum { MyTitleScheme, SchemeNorm, SchemeSel, SchemeLast }; /* color schemes */
+ enum { NetSupported, NetWMName, NetWMState,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
 @@ -704,11 +704,11 @@
  void
  drawbar(Monitor *m)
@@ -14,7 +23,7 @@
  
  	for (c = m->clients; c; c = c->next) {
  		occ |= c->tags;
-@@ -716,12 +716,12 @@
+@@ -716,35 +716,36 @@
  			urg |= c->tags;
  	}
  	x = 0;
@@ -26,12 +35,14 @@
  		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
 -		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
 -		           occ & 1 << i, urg & 1 << i);
-+        //drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-+		//           occ & 1 << i, urg & 1 << i);
++        	//drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
++        	//           occ & 1 << i, urg & 1 << i);
  		x += w;
  	}
  	w = blw = TEXTW(m->ltsymbol);
-@@ -730,7 +730,7 @@
+-	drw_setscheme(drw, &scheme[SchemeNorm]);
++	drw_setscheme(drw, &scheme[MyTitleScheme]);
+ 	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0);
  	x += w;
  	xx = x;
  	if (m == selmon) { /* status is only drawn on selected monitor */
@@ -40,30 +51,45 @@
  		x = m->ww - w;
  		if (x < xx) {
  			x = xx;
-@@ -742,9 +742,9 @@
+ 			w = m->ww - xx;
+ 		}
++        	drw_setscheme(drw, &scheme[SchemeNorm]);
+ 		drw_text(drw, x, 0, w, bh, stext, 0);
+ 	} else
+ 		x = m->ww;
  	if ((w = x - xx) > bh) {
  		x = xx;
  		if (m->sel) {
 -			drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
-+			drw_setscheme(drw, &scheme[SchemeNorm]);
++            		drw_setscheme(drw, &scheme[MyTitleScheme]);
  			drw_text(drw, x, 0, w, bh, m->sel->name, 0);
 -			drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
-+			//drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
++            		//drw_rect(drw, x + 1, 1, dx, dx, m->sel->isfixed, m->sel->isfloating, 0);
  		} else {
  			drw_setscheme(drw, &scheme[SchemeNorm]);
  			drw_rect(drw, x, 0, w, bh, 1, 0, 1);
-@@ -1560,8 +1560,8 @@
+@@ -1560,7 +1561,7 @@
  	drw_load_fonts(drw, fonts, LENGTH(fonts));
  	if (!drw->fontcount)
  		die("no fonts could be loaded.\n");
 -	bh = drw->fonts[0]->h + 2;
--	updategeom();
-+    bh = 25;
-+    updategeom();
++	bh = 25;
+ 	updategeom();
  	/* init atoms */
  	wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
- 	wmatom[WMDelete] = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
-@@ -1632,8 +1632,6 @@
+@@ -1586,7 +1587,10 @@
+ 	scheme[SchemeSel].border = drw_clr_create(drw, selbordercolor);
+ 	scheme[SchemeSel].bg = drw_clr_create(drw, selbgcolor);
+ 	scheme[SchemeSel].fg = drw_clr_create(drw, selfgcolor);
+-	/* init bars */
++    	scheme[MyTitleScheme].border = drw_clr_create(drw, titlebordercolor);
++    	scheme[MyTitleScheme].bg = drw_clr_create(drw, titlebgcolor);
++    	scheme[MyTitleScheme].fg = drw_clr_create(drw, titlefgcolor);
++    	/* init bars */
+ 	updatebars();
+ 	updatestatus();
+ 	/* EWMH support per view */
+@@ -1632,8 +1636,6 @@
  void
  spawn(const Arg *arg)
  {
