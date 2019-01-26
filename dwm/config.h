@@ -18,17 +18,19 @@ static const char selbordercolor[]  = "#cdcdcd";
 static const char selbgcolor[]      = "#eb5354";
 static const char selfgcolor[]      = "#000000";
 
-static const unsigned int gappx     = 10;
 static const unsigned int borderpx  = 4;
 static const unsigned int snap      = 10;
 
 static const int showbar            = 1;
 static const int topbar             = 1;
 
-// custom schemes
+// custom options
 static const char titlebordercolor[] = "#444444";
 static const char titlebgcolor[]     = "#202020";
 static const char titlefgcolor[]     = "#eb5354";
+
+static const unsigned int gappx      = 10;
+static const unsigned int barheight  = 25;
 
 // workspaces
 static const char *tags[] = { "TERM", "MSg", "WWW", "CODE", "OTHERS", "6", "7", "8", "9" };

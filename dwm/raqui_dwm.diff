@@ -50,9 +50,8 @@
  			x = xx;
  			w = m->ww - xx;
  		}
--		drw_text(drw, x, 0, w, bh, stext, 0);
-+        	drw_setscheme(drw, &scheme[SchemeNorm]);
-+			drw_text(drw, x, 0, w, bh, stext, 0);
++		drw_setscheme(drw, &scheme[SchemeNorm]);
+ 		drw_text(drw, x, 0, w, bh, stext, 0);
  	} else
  		x = m->ww;
  	if ((w = x - xx) > bh) {
@@ -70,7 +69,7 @@
  	if (!drw->fontcount)
  		die("no fonts could be loaded.\n");
 -	bh = drw->fonts[0]->h + 2;
-+	bh = 25;
++	bh = barheight;
  	updategeom();
  	/* init atoms */
  	wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
