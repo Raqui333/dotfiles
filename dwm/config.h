@@ -5,21 +5,30 @@ static void gap_tile(Monitor *);
 
 // font
 static const char *fonts[] = {
-	"fantasquesansmono:size=8"
+    "siji:size=10",
+    "fantasquesansmono:size=8",
 };
 
 // config
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#202020";
 static const char normfgcolor[]     = "#cdcdcd";
+
 static const char selbordercolor[]  = "#cdcdcd";
-static const char selbgcolor[]      = "#cdcdcd";
+static const char selbgcolor[]      = "#eb5354";
 static const char selfgcolor[]      = "#000000";
+
 static const unsigned int gappx     = 10;
 static const unsigned int borderpx  = 4;
-static const unsigned int snap      = 30;
+static const unsigned int snap      = 10;
+
 static const int showbar            = 1;
 static const int topbar             = 1;
+
+// custom schemes
+static const char titlebordercolor[] = "#444444";
+static const char titlebgcolor[]     = "#202020";
+static const char titlefgcolor[]     = "#eb5354";
 
 // workspaces
 static const char *tags[] = { "TERM", "MSg", "WWW", "CODE", "OTHERS", "6", "7", "8", "9" };
@@ -37,9 +46,9 @@ static const int resizehints = 0;    // 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	// layout
     // first entry is default
-	{ "[G]", gap_tile },
-	{ "[T]", tile },
-	{ "[M]", monocle },
+	{ "", gap_tile },
+	{ "", tile },
+	{ "", monocle },
 };
 
 // key definitions
@@ -52,7 +61,7 @@ static const Layout layouts[] = {
 static const char *urxvt[]     =  { "urxvt", NULL };
 static const char *rofi[]      =  { "rofi", "-show", "run" };
 static const char *print[]     =  { "printshotter", "-n" };
-static const char *firefox[]   =  { "firefox", NULL };
+static const char *firefox[]   =  { "apulse", "firefox" };
 static const char *telegram[]  =  { "telegram", NULL };
 
 static const char *volume_up[] = { "amixer", "set", "Master", "5%+" };
