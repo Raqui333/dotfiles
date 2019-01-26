@@ -59,13 +59,13 @@ static const Layout layouts[] = {
 
 // commands
 static const char *urxvt[]     =  { "urxvt", NULL };
-static const char *rofi[]      =  { "rofi", "-show", "run" };
-static const char *print[]     =  { "printshotter", "-n" };
-static const char *firefox[]   =  { "apulse", "firefox" };
+static const char *rofi[]      =  { "rofi", "-show", "run", NULL };
+static const char *print[]     =  { "printshotter", "-n", NULL };
+static const char *firefox[]   =  { "apulse", "firefox", NULL };
 static const char *telegram[]  =  { "telegram", NULL };
 
-static const char *volume_up[] = { "amixer", "set", "Master", "5%+" };
-static const char *volume_dn[] = { "amixer", "set", "Master", "5%-" };
+static const char *volume_up[] = { "amixer", "set", "Master", "5%+", NULL };
+static const char *volume_dn[] = { "amixer", "set", "Master", "5%-", NULL };
 
 static Key keys[] = {
 	// modifier                     key        function        argument
