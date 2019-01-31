@@ -1,5 +1,5 @@
---- a/dwm.c
-+++ b/dwm.c
+--- a	2019-01-31 21:12:54.373573988 -0200
++++ dwm.c	2019-01-31 21:13:35.732572048 -0200
 @@ -59,7 +59,7 @@
  
  /* enums */
@@ -64,7 +64,16 @@
  		} else {
  			drw_setscheme(drw, &scheme[SchemeNorm]);
  			drw_rect(drw, x, 0, w, bh, 1, 0, 1);
-@@ -1560,7 +1556,7 @@
+@@ -1123,8 +1119,6 @@
+ 	for (c = m->clients; c; c = c->next)
+ 		if (ISVISIBLE(c))
+ 			n++;
+-	if (n > 0) /* override layout symbol */
+-		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
+ 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
+ 		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+ }
+@@ -1560,7 +1554,7 @@
  	drw_load_fonts(drw, fonts, LENGTH(fonts));
  	if (!drw->fontcount)
  		die("no fonts could be loaded.\n");
@@ -73,7 +82,7 @@
  	updategeom();
  	/* init atoms */
  	wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
-@@ -1586,7 +1582,10 @@
+@@ -1586,7 +1580,10 @@
  	scheme[SchemeSel].border = drw_clr_create(drw, selbordercolor);
  	scheme[SchemeSel].bg = drw_clr_create(drw, selbgcolor);
  	scheme[SchemeSel].fg = drw_clr_create(drw, selfgcolor);
@@ -85,7 +94,7 @@
  	updatebars();
  	updatestatus();
  	/* EWMH support per view */
-@@ -1632,8 +1631,6 @@
+@@ -1632,8 +1629,6 @@
  void
  spawn(const Arg *arg)
  {
