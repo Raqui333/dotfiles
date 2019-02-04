@@ -3,63 +3,66 @@
 // custom function
 static void gap_tile(Monitor *);
 
-// font
+/* appearance */
+static const unsigned int lrpadding = 25;
+static const unsigned int barheight = 25;
+static const unsigned int gappx     = 10;
+static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int snap      = 30;       /* snap pixel */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+
 static const char *fonts[] = {
-    "siji:size=10",
-    "fantasquesansmono:size=8",
+	"siji:size=10",
+	"fantasquesansmono:size=8",
 };
 
-// config
-static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#202020";
-static const char normfgcolor[]     = "#cdcdcd";
+static const char focusedBg[]     = "#eb5354";
+static const char focusedFg[]     = "#000000";
+static const char focusedBorder[] = "#cdcdcd";
 
-static const char selbordercolor[]  = "#cdcdcd";
-static const char selbgcolor[]      = "#eb5354";
-static const char selfgcolor[]      = "#000000";
+static const char unfocusedBg[]     = "#202020";
+static const char unfocusedFg[]     = "#cdcdcd";
+static const char unfocusedBorder[] = "#414141";
 
-static const unsigned int borderpx  = 4;
-static const unsigned int snap      = 10;
+static const char *colors[][3] = {
+	/*               fg            bg           border   */
+	[SchemeNorm]  = { unfocusedFg, unfocusedBg, unfocusedBorder },
+	[SchemeSel]   = { focusedFg  , focusedBg  , focusedBorder   },
+	[SchemeTitle] = { focusedBg  , unfocusedBg, focusedBorder   },
+};
 
-static const int showbar            = 1;
-static const int topbar             = 1;
-
-// custom options
-static const char titlebordercolor[] = "#444444";
-static const char titlebgcolor[]     = "#202020";
-static const char titlefgcolor[]     = "#eb5354";
-
-static const unsigned int gappx      = 10;
-static const unsigned int barheight  = 25;
-
-// workspaces
+/* tagging */
 static const char *tags[] = { "TERM", "MSg", "WWW", "CODE", "OTHERS", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	// class      instance    title       tags mask     isfloating   monitor
+	/* xprop(1):
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+	 */
+	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 };
 
-// layout(s)
-static const float mfact     = 0.55; // factor of master area size [0.05..0.95]
-static const int nmaster     = 1;    // number of clients in master area
-static const int resizehints = 0;    // 1 means respect size hints in tiled resizals
+/* layout(s) */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster     = 1;    /* number of clients in master area */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-	// layout
-    // first entry is default
-	{ "", gap_tile },
-	{ "", tile },
-	{ "", monocle },
+	/* symbol     arrange function */
+	{ "" , gap_tile },
+	{ "", tile     },
+	{ "" , monocle  },
 };
 
-// key definitions
+/* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} },
 
-// commands
+/* commands */
 static const char *urxvt[]     =  { "urxvt", NULL };
 static const char *rofi[]      =  { "rofi", "-show", "run", NULL };
 static const char *print[]     =  { "printshotter", "-n", NULL };
@@ -103,10 +106,10 @@ static Key keys[] = {
     TAGKEYS( XK_9, 8)
 };
 
-// button definitions
-// click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin
+/* button definitions */
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	// click                event mask      button          function        argument
+	/* click                event mask      button          function        argument */
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 };
