@@ -119,7 +119,6 @@ int get_temp() {
     return temp/1000;
 }
 
-#include <chrono>
 int main() {
     std::vector<int> mem = get_mem();
     printf("%i°C  ::  %iMi / %.1fGi  ::  %d  ::  %s  ::  %i%%  ::  %s\n",
