@@ -88,7 +88,9 @@ std::string get_kernel() {
     
     std::string latest, current = info.release;
 
+    curl_global_init(CURL_GLOBAL_ALL);
     CURL *handle = curl_easy_init();
+    
     curl_easy_setopt(handle, CURLOPT_URL, "https://www.kernel.org/");
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &latest);
@@ -97,6 +99,7 @@ std::string get_kernel() {
         latest = "NONE";
     
     curl_easy_cleanup(handle);
+    curl_global_cleanup();
     
     std::smatch matches;
     if(std::regex_search(latest, matches, (std::regex) "stable.*?\n.*\n"))
@@ -109,7 +112,7 @@ std::string get_kernel() {
 }
 
 int get_temp() {
-    std::ifstream fin ("/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input", std::ifstream::in);
+    std::ifstream fin ("/sys/class/hwmon/hwmon0/temp2_input", std::ifstream::in);
     
     int temp;
     fin >> temp;
@@ -121,7 +124,7 @@ int get_temp() {
 
 int main() {
     std::vector<int> mem = get_mem();
-    printf("%i°C  ::  %iMi / %.1fGi  ::  %d  ::  %s  ::  %i%%  ::  %s\n",
+    printf("     %i°C  ::  %iMi / %.1fGi  ::  %d  ::  %s  ::  %i%%  ::  %s\n",
     get_temp(), mem[0], (float) mem[1]/1024, get_npkgs(), get_kernel().c_str(), get_volume(), get_date().c_str());
     
     return 0;
