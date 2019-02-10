@@ -108,7 +108,7 @@ std::string get_kernel() {
     if (latest == current)
         return current;
     else
-        return latest + " -> " + current;
+        return latest + " <- " + current;
 }
 
 int get_temp() {
