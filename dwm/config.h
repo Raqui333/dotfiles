@@ -17,19 +17,20 @@ static const char *fonts[] = {
 	"fantasquesansmono:size=8",
 };
 
-static const char focusedBg[]     = "#eb5354";
-static const char focusedFg[]     = "#000000";
-static const char focusedBorder[] = "#cdcdcd";
+static const char theme_color[]	= "#eb5354";
+static const char bar_color[]	= "#202020";
+static const char pseudo[]		= "#777777";
 
-static const char unfocusedBg[]     = "#202020";
-static const char unfocusedFg[]     = "#cdcdcd";
-static const char unfocusedBorder[] = "#414141";
+static const char black[]		= "#000000";
+static const char white[]		= "#cdcdcd";
+static const char grey[]		= "#414141";
 
-static const char *colors[][3] = {
+static const char *colors[][4] = {
 	/*               fg            bg           border   */
-	[SchemeNorm]  = { unfocusedFg, unfocusedBg, unfocusedBorder },
-	[SchemeSel]   = { focusedFg  , focusedBg  , focusedBorder   },
-	[SchemeTitle] = { focusedBg  , unfocusedBg, focusedBorder   },
+	[SchemeNorm]  = { white      , bar_color  , grey  },
+	[SchemeSel]   = { black      , theme_color, white },
+	[SchemeTitle] = { theme_color, bar_color  , 0     },
+	[SchemeOpen]  = { pseudo     , bar_color  , 0     },
 };
 
 /* tagging */
@@ -52,7 +53,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "" , gap_tile },
-	{ "", tile     },
+	{ "", tile      },
 	{ "" , monocle  },
 };
 
@@ -64,7 +65,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *urxvt[]     =  { "urxvt", NULL };
-static const char *rofi[]      =  { "rofi", "-show", "run", NULL };
+static const char *dmenu[]     =  { "dmenu_run", "-l", "5", "-sb", theme_color, "-nb", bar_color, "-fn", "fantasquesansmono:size=10", NULL };
 static const char *print[]     =  { "printshotter", "-n", NULL };
 static const char *firefox[]   =  { "apulse", "firefox", NULL };
 static const char *telegram[]  =  { "telegram", NULL };
@@ -72,15 +73,18 @@ static const char *telegram[]  =  { "telegram", NULL };
 static const char *volume_up[] = { "amixer", "set", "Master", "5%+", NULL };
 static const char *volume_dn[] = { "amixer", "set", "Master", "5%-", NULL };
 
+static const char *sublime[]   = { "sublime", NULL };
+
 static Key keys[] = {
 	// modifier                     key        function        argument
     { 0,                            XK_Print,  spawn,          { .v = print } },
-    { MODKEY,                       XK_d,      spawn,          { .v = rofi } },
+    { MODKEY,                       XK_d,      spawn,          { .v = dmenu } },
     { MODKEY,                       XK_Return, spawn,          { .v = urxvt } },
     { MODKEY,                       XK_f,      spawn,          { .v = firefox } },
     { MODKEY,                       XK_t,      spawn,          { .v = telegram } },
     { MODKEY,                       XK_period, spawn,          { .v = volume_up } },
     { MODKEY,                       XK_comma,  spawn,          { .v = volume_dn } },
+    { MODKEY,                       XK_k,      spawn,          { .v = sublime } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_Up,     focusstack,     {.i = +1 } },
     { MODKEY,                       XK_Down,   focusstack,     {.i = -1 } },
