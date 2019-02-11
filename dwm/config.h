@@ -4,13 +4,14 @@
 static void gap_tile(Monitor *);
 
 /* appearance */
-static const unsigned int lrpadding = 25;
-static const unsigned int barheight = 25;
-static const unsigned int gappx     = 10;
 static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int snap      = 30;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+
+static const unsigned int gappx     = 10;
+static const unsigned int barheight = 25;
+static const unsigned int lrpadding = 25;
 
 static const char *fonts[] = {
 	"siji:size=10",
@@ -18,19 +19,17 @@ static const char *fonts[] = {
 };
 
 static const char theme_color[]	= "#eb5354";
-static const char bar_color[]	= "#202020";
-static const char pseudo[]		= "#777777";
+static const char bar_color[]   = "#202020";
 
-static const char black[]		= "#000000";
-static const char white[]		= "#cdcdcd";
-static const char grey[]		= "#414141";
+static const char black[]       = "#000000";
+static const char white[]       = "#cdcdcd";
+static const char grey[]        = "#414141";
 
-static const char *colors[][4] = {
+static const char *colors[][3] = {
 	/*               fg            bg           border   */
 	[SchemeNorm]  = { white      , bar_color  , grey  },
 	[SchemeSel]   = { black      , theme_color, white },
 	[SchemeTitle] = { theme_color, bar_color  , 0     },
-	[SchemeOpen]  = { pseudo     , bar_color  , 0     },
 };
 
 /* tagging */
