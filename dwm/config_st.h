@@ -228,7 +228,9 @@ static Key key[] = {
 	{ XK_Insert,		XK_NO_MOD,      "\033[4h",		-1,		 0},
 	{ XK_Delete,		XK_NO_MOD,      "\033[P",		-1,		 0},
 	
-	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,		 0},
+	{ XK_Prior,			XK_NO_MOD,		"\033[5~",       0,		 0},
+	{ XK_Next,			XK_NO_MOD,		"\033[6~",       0,		 0},
+	{ XK_BackSpace,		XK_NO_MOD,		"\177",			 0,		 0},
 
 	{ XK_Up,			XK_NO_MOD,		"\033OA",		 0,		+1},
 	{ XK_Down,			XK_NO_MOD,		"\033OB",		 0,		+1},
