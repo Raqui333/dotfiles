@@ -224,10 +224,10 @@ static Key key[] = {
 	{ XK_Left,          XK_NO_MOD,      "\033[D",        0,     -1},
 	{ XK_Right,         XK_NO_MOD,      "\033[C",        0,     -1},
 	{ XK_Home,          XK_NO_MOD,      "\033[H",        0,     -1},
-	{ XK_End,           XK_NO_MOD,      "\033[4~",       0,      0},
 	{ XK_Insert,        XK_NO_MOD,      "\033[4h",      -1,      0},
 	{ XK_Delete,        XK_NO_MOD,      "\033[P",       -1,      0},
 	
+	{ XK_End,           XK_NO_MOD,      "\033[4~",       0,      0},
 	{ XK_Prior,         XK_NO_MOD,      "\033[5~",       0,      0},
 	{ XK_Next,          XK_NO_MOD,      "\033[6~",       0,      0},
 	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,	     0},
