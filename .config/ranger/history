@@ -1,6 +1,0 @@
-rename hack.ssh
-rename hack.sh
-rename Shells
-
-open_with 0
-delete
