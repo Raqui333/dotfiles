@@ -102,8 +102,8 @@ std::string get_kernel() {
     curl_global_cleanup();
     
     std::smatch matches;
-    if(std::regex_search(latest, matches, (std::regex) "stable.*?\n.*\n"))
-        latest = std::regex_replace((std::string) matches[0], (std::regex) "[^0-9.]", "");
+    if(std::regex_search(latest, matches, (std::regex) "<.*?latest_link.*?\n.*\n"))
+        latest = std::regex_replace((std::string) matches[0], (std::regex) "<.*?>|\n|\\s", "");
 
     if (latest == current)
         return current;
