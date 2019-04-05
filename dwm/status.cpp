@@ -1,21 +1,26 @@
-#include <iostream>
+// C Includes
 #include <ctime>
-#include <regex>
-#include <fstream>
-#include <math.h>
-#include <alsa/asoundlib.h>
 #include <curl/curl.h>
 #include <sys/utsname.h>
+
+// C++ Includes
+#include <iostream>
+#include <regex>
+#include <fstream>
+
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
+// Compilation Reference
+// clang++ status.cpp -lstdc++fs -std=c++17 -lcurl -o status
+
 std::string get_date() {
-    std::time_t tm = std::time(nullptr);
+    time_t tm = time(NULL);
     char date_time[32];
     
     std::strftime(date_time, sizeof(date_time), "%b %d, %a %I:%M %P", std::localtime(&tm));
     
-    return (std::string) date_time;
+    return static_cast<std::string>(date_time);
 }
 
 int get_npkgs() {
@@ -28,57 +33,8 @@ int get_npkgs() {
     return number_of_pkgs;
 }
 
-std::vector<int> get_mem() {
-    std::smatch matches;
-    std::vector<int> mem_info;
-    
-    std::ifstream fin ("/proc/meminfo", std::ifstream::in);
-    
-    std::string data;
-    while (std::getline(fin, data)) {
-        if (std::regex_match(data, matches, (std::regex) "^(MemTotal|MemFree|Buffers|Cached|Slab):.*"))
-            mem_info.push_back(std::stoi(std::regex_replace((std::string) matches[0], (std::regex) "[^0-9]", "")));
-    }
-    
-    fin.close();
-    
-    int memtotal = mem_info[0], memused = memtotal;
-    
-    for (unsigned i = mem_info.size(); i > 0; --i) {
-        memused -= mem_info[i];
-    }
-    
-	return {memused >> 10, memtotal >> 10};
-}
-
-int get_volume() {
-    long vol, min, max;
-    snd_mixer_t *handle;    
-    snd_mixer_selem_id_t *id;
-    
-    snd_mixer_selem_id_alloca(&id);
-    snd_mixer_open(&handle, 0);
-    snd_mixer_attach(handle, "default");
-    snd_mixer_selem_register(handle, NULL, NULL);
-    snd_mixer_load(handle);
-    
-    snd_mixer_selem_id_set_index(id, 0);
-    snd_mixer_selem_id_set_name(id, "Master");
-    snd_mixer_elem_t *elem = snd_mixer_find_selem(handle, id);
-    
-    snd_mixer_selem_get_playback_volume_range(elem, &min, &max);
-    snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_MONO, &vol);
-    
-    snd_mixer_close(handle);
-
-    int range = max - min;
-    vol -= min;
-    
-    return rint((double)vol / (double)range * 100);
-}
-
 static size_t write_data(void *buf, size_t size, size_t nmemb, void *userp) {
-    ((std::string *) userp)->append((char *) buf, size * nmemb);
+    static_cast<std::string*>(userp)->append(static_cast<char*>(buf), size * nmemb);
     return size * nmemb;
 }
 
@@ -122,10 +78,45 @@ int get_temp() {
     return temp/1000;
 }
 
-int main() {
-    std::vector<int> mem = get_mem();
-    printf("     %i°C  ::  %iMi / %.1fGi  ::  %d  ::  %s  ::  %i%%  ::  %s\n",
-    get_temp(), mem[0], (float) mem[1]/1024, get_npkgs(), get_kernel().c_str(), get_volume(), get_date().c_str());
+// Class MemInfo
+class MemInfo {
+    float mem_total;
+    int mem_used;
+public:
+    MemInfo();
+    int used() const;
+    float total() const;
+};
+
+// Class MemInfo Functions
+MemInfo::MemInfo() {
+    std::smatch matches;
+    std::vector<int> mem_info;
     
+    std::ifstream fin ("/proc/meminfo", std::ifstream::in);
+    
+    std::string data;
+    while (std::getline(fin, data)) {
+        if (std::regex_match(data, matches, static_cast<std::regex>("^(MemTotal|MemFree|Buffers|Cached|Slab):.*")))
+            mem_info.push_back(std::stoi(std::regex_replace(static_cast<std::string>(matches[0]), static_cast<std::regex>("[^0-9]"), "")));
+    }
+    
+    fin.close();
+    
+    mem_total = mem_info[0], mem_used = mem_total;
+    
+    for (unsigned i = mem_info.size(); i > 0; --i)
+        mem_used -= mem_info[i];
+}
+
+int MemInfo::used() const { return mem_used / 1024; }
+float MemInfo::total() const { return mem_total / 1024 / 1024; }
+
+int main() {
+    MemInfo mem;
+
+    printf("     %i°C  ::  %iMi / %.1fGi  ::  %d  ::  %s  ::  %s\n",
+    get_temp(), mem.used(), mem.total(), get_npkgs(), get_kernel().c_str(), get_date().c_str());
+
     return 0;
 }
