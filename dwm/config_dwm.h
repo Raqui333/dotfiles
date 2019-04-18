@@ -18,22 +18,33 @@ static const char *fonts[] = {
 	"fantasquesansmono:size=8",
 };
 
-static const char theme_color[]	= "#eb5354";
-static const char bar_color[]   = "#202020";
+static const char theme_color[] = "#f32645";
+static const char bar_color[] = "#2f2b3a";
 
 static const char black[]       = "#000000";
 static const char white[]       = "#cdcdcd";
 static const char grey[]        = "#414141";
 
-static const char *colors[][3] = {
+static const char work_C[]   = "#63f7a3";
+static const char status_C[]  = "#41e9c8";
+static const char title_C[] = "#3c9edd";
+
+static const char *colors[][9] = {
 	/*               fg            bg           border   */
 	[SchemeNorm]  = { white      , bar_color  , grey  },
 	[SchemeSel]   = { black      , theme_color, white },
-	[SchemeTitle] = { theme_color, bar_color  , 0     },
+	
+	[SchemeTitle]  = { title_C , bar_color, 0 },
+	[SchemeWork]   = { work_C  , bar_color, 0 },
+	[SchemeStatus] = { status_C, bar_color, 0 },
+
+	[SchemeTunder] = { 0, title_C , 0 },
+	[SchemeWunder] = { 0, work_C  , 0 },
+	[SchemeSunder] = { 0, status_C, 0 },
 };
 
 /* tagging */
-static const char *tags[] = { "TERM", "MSg", "WWW", "CODE", "OTHERS", "6", "7", "8", "9" };
+static const char *tags[] = { "TERM", "MSG", "WWW", "CODE", "OTHERS", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -64,9 +75,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *st[]        =  { "st", NULL };
-static const char *dmenu[]     =  { "dmenu_run", "-l", "5", "-sb", theme_color, "-nb", bar_color, "-fn", "fantasquesansmono:size=10", NULL };
+static const char *dmenu[]     =  { "dmenu_run", "-p", "run:", "-sb", theme_color, "-nb", bar_color, "-fn", "fantasquesansmono:size=10", NULL };
 static const char *print[]     =  { "printshotter", "-n", NULL };
-static const char *firefox[]   =  { "apulse", "firefox", NULL };
+static const char *firefox[]  =  { "apulse", "firefox", NULL };
 static const char *telegram[]  =  { "telegram", NULL };
 
 static const char *volume_up[] = { "amixer", "set", "Master", "5%+", NULL };
@@ -130,6 +141,7 @@ void gap_tile(Monitor *m) {
 		mw = m->nmaster ? m->ww * m->mfact : 0;
 	else
 		mw = m->ww;
+	
 	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
 			h = (m->wh - my - gap) / (MIN(n, m->nmaster) - i);
@@ -141,3 +153,4 @@ void gap_tile(Monitor *m) {
 			ty += HEIGHT(c) + gap;
 		}
 }
+
